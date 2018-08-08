@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>CherryPy Test</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="/static/css/style.css" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <script src="/static/js/resetlist.js" rel="stylesheet"></script>
+        <script src="/static/js/search.js" rel="stylesheet"></script>
+        <script src="/static/js/loading.js" rel="stylesheet"></script>
+        <script src="/static/js/timer.js" rel="stylesheet"></script>
+
+        <script>
+        </script>
+    </head>
+    <body>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">CherryPy Test</h1>
+            <p class="lead">Just a test-application.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <!-- <form action="Search" method="GET">
+            Search for manga:
+            <input type="text" name="name" />
+            <input type="submit" />
+        </form> -->
+
+        <div class="card">
+            <div class="card-header" id="bruh">
+                    Search for a manga
+            </div>
+            <div class="card-body" id="cardbod">
+                <h5 class="card-title">Enter name:</h5>
+                <input class="form-control" type="text" id="myInput" onkeyup="IdleSearch()" placeholder="Enter a manga name">
+                <div id="loadbar"></div>
+                <div id="resultbar"></div>
+            </div>
+        </div>
+
+    </div>
+    </body>
+</html>
