@@ -1,6 +1,8 @@
-/*body {
-    background-color: blue;
-}*/
+body {
+  /*background-color: blue;*/
+    font-family: 'Raleway', sans-serif;
+    background-color: #f7f7f7;
+}
 
 .material-icons {
     font-family: 'Material Icons';
@@ -70,8 +72,76 @@
 
 #myInput {
     margin-bottom: 15px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    font-family: 'open sans', sans-serif;;
 }
 
 .resultcards {
-    margin: 10px 0 10px 0px;
+    margin: 15px 0 15px 0px;
+    background: #FFF;
+    color: #464646;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    border: 1px solid rgba(0,0,0,.09);
+}
+
+.prevsyn {
+  font-size: 13px;
+}
+
+#highrow {
+  display: block;
+  text-align: center;
+  color: #464646;
+}
+
+#lowrow {
+  display: block;
+  text-align: center;
+}
+
+#searchselect {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  border-right: 0;
+  background-color: rgba(241, 241, 241, 1);
+}
+
+.jumbotron-fluid {
+  background-color: rgba(235, 235, 235, 1);
+  padding: 32px 0px 32px 0px;
+}
+
+.form-control {
+  border: 1px solid rgba(0,0,0,.09);
+}
+
+.custom-select {
+  border: 1px solid rgba(0,0,0,.09);
+}
+
+#headertext1 {
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: #464646;
+}
+
+#headertext2 {
+  font-size: 1.20rem;
+  color: #464646;
+}
+
+#myInput::placeholder {
+  color: rgba(0, 0, 0, 0.18)
+}
+
+.badge {
+  display: inline;
+  vertical-align: 3px;
+  font-size: 0.65rem;
+}
+
+.card-img-top {
+  border-bottom-left-radius: calc(.25rem - 1px);
+  border-top-right-radius: 0;
 }

@@ -31,14 +31,10 @@ function querySearch(){
                 document.getElementById('resultbar').appendChild(div);
 
                 var div = document.createElement('div');
-                div.setAttribute('class', 'card-body');
-                div.setAttribute('id', "cardbody" + currentresult);
-                document.getElementById("card" + currentresult).appendChild(div);
-
-                var div = document.createElement('div');
-                div.setAttribute('class', 'container');
+                div.setAttribute('class', 'container-fluid');
+                div.setAttribute('style', 'padding: 0;');
                 div.setAttribute('id', "innercontainer" + currentresult);
-                document.getElementById("cardbody" + currentresult).appendChild(div);
+                document.getElementById("card" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'row');
@@ -48,6 +44,7 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-2');
                 div.setAttribute('id', "cardcol1" + currentresult);
+                div.innerHTML = '<img class="card-img-top" src="' + data["data"][i].attributes.posterImage.small + '" alt="Card image' + currentresult + 'cap" style="width: 180px; height: 100%; width: 115%;">';
                 document.getElementById("cardrow" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
@@ -56,30 +53,43 @@ function querySearch(){
                 document.getElementById("cardrow" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
+                div.setAttribute('class', 'card-body');
+                div.setAttribute('id', "cardbody" + currentresult);
+                document.getElementById("cardcol2" + currentresult).appendChild(div);
+
+                var div = document.createElement('div');
                 div.setAttribute('class', 'col-1');
                 div.setAttribute('id', "cardcol3" + currentresult);
                 document.getElementById("cardrow" + currentresult).appendChild(div);
 
                 //////////////////
 
-                var div = document.createElement('div');
-                div.setAttribute('class', 'card');
-                div.setAttribute('id', "cardimg" + currentresult);
-                div.innerHTML = '<img class="card-img-top" src="' + data["data"][i].attributes.posterImage.small + '" alt="Card image' + currentresult + 'cap">';
-                document.getElementById("cardcol1" + currentresult).appendChild(div);
-
                 var published = data["data"][i].attributes.startDate
+                var ongoing = data["data"][i].attributes.status
+                var serialization = data["data"][i].attributes.serialization
+                var str = "<h5>" + data["data"][i].attributes.canonicalTitle
                 if (published !== null) {
                     var published = published.slice(0, 4);
-                    var str = "<h5>" + data["data"][i].attributes.canonicalTitle + ' (' + published + ')' + "</h5><p>" + data["data"][i].attributes.synopsis + "</p>"
+                    var str = str + ' (' + published + ')'
+                    if (ongoing == "finished") {
+                        var str = str + '  <span class="badge badge-secondary">' + serialization + '</span>  <span class="badge badge-danger">Ended</span>'
+                    } else {
+                        var str = str + '  <span class="badge badge-secondary">' + serialization + '</span>  <span class="badge badge-success">Ongoing</span>'
+                    }
+                    var str = str + '</h5><p class="prevsyn" style="margin: 0;">' + data["data"][i].attributes.synopsis + "</p>"
                 } else {
-                    var str = "<h5>" + data["data"][i].attributes.canonicalTitle + "</h5><p>" + data["data"][i].attributes.synopsis + "</p>"
+                    if (ongoing == "finished") {
+                        var str = str + '  <span class="badge badge-secondary">' + serialization + '</span>  <span class="badge badge-danger">Ended</span>'
+                    } else {
+                        var str = str + '  <span class="badge badge-secondary">' + serialization + '</span>  <span class="badge badge-success">Ongoing</span>'
+                    }
+                    var str = str + '</h5><p class="prevsyn" style="margin: 0;">' + data["data"][i].attributes.synopsis + "</p>"
                 }
                 var div = document.createElement('div');
                 div.setAttribute('class', 'container');
                 div.setAttribute('id', "result" + currentresult);
                 div.innerHTML = str;
-                document.getElementById("cardcol2" + currentresult).appendChild(div);
+                document.getElementById("cardbody" + currentresult).appendChild(div);
 
                 $('#' + "result" + currentresult).hide();
                 $('#' + "result" + currentresult).fadeIn(500);

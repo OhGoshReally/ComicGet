@@ -1,7 +1,7 @@
 var idlecounter
+var cacheentry
 var entry
 var timer_is_on = 0;
-var cacheentry
 function IdleSearch() {
     cacheentry = document.getElementById('myInput').value
     if (cacheentry !== "") {
