@@ -74,7 +74,8 @@ body {
     margin-bottom: 15px;
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
-    font-family: 'open sans', sans-serif;;
+    font-family: 'open sans', sans-serif;
+    padding-left: 40px;
 }
 
 .resultcards {
@@ -123,7 +124,9 @@ body {
 #headertext1 {
   font-weight: bold;
   font-size: 2.5rem;
-  color: #464646;
+  /*color: #464646;
+  color: #73d873; */
+  color: #f59ef1;
 }
 
 #headertext2 {
@@ -139,9 +142,76 @@ body {
   display: inline;
   vertical-align: 3px;
   font-size: 0.65rem;
+  border-radius: 2px;
 }
 
 .card-img-top {
   border-bottom-left-radius: calc(.25rem - 1px);
   border-top-right-radius: 0;
+}
+
+#seaicon {
+  position: absolute;
+  left: 13px;
+  top: 11px;
+  color: #ACACAC;
+}
+
+#realheader {
+  box-shadow: inset 0 -20px 30px -13px rgba(0, 0, 0, 0.05);
+}
+
+.cattags {
+  font-size: 0.65rem;
+  margin: 0px 2px 0px 2px;
+}
+
+.addbtn {
+  position: absolute;
+  bottom: 10px;
+  font-weight: bold;
+  opacity: 0.65;
+  border: 0;
+}
+
+.blink {
+  animation: blink-animation 1s steps(3, start) infinite;
+  -webkit-animation: blink-animation 1s steps(3, start) infinite;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes blink-animation {
+    to {visibility: hidden;}
+}
+
+/* Standard syntax */
+@keyframes blink-animation {
+    to {visibility: hidden}
+}
+
+.toptag {
+  border-radius: 2px;
+  opacity: 0.8;
+  color: white;
+}
+
+.hiddenbuts {
+  width: 100%
+}
+
+.bottomcardbody {
+  padding-top: 0px;
+}
+
+.btn-success {
+  background-color: #57b86c;
+}
+
+.btn-primary {
+  background-color: #3697ff;
+}
+
+.hiddenbuts {
+  border: 0px;
+  font-weight: bold;
 }
