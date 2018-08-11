@@ -218,30 +218,39 @@ function querySearch(){
                 }
 
                 str = str + '</h5>'
+                
+                var chaptersurl = data["data"][i].relationships.chapters.links.self
 
-                if (syno !== null) {
-                    str = str + '<p class="prevsyn" style="margin: 0;">' + syno + "</p>"
-                }
+                
+                $.getJSON(chaptersurl, getChapters);
+                function getChapters(chapters){
+                    str = str + '<h6>' + chapters["data"].length + ' Chapters</h6>'
+                
 
-                var div = document.createElement('div');
-                div.setAttribute('class', 'container');
-                div.setAttribute('id', "result" + currentresult);
-                div.innerHTML = str;
-                document.getElementById("cardbody" + currentresult).appendChild(div);
+                    if (syno !== null) {
+                        str = str + '<p class="prevsyn" style="margin: 0;">' + syno + "</p>"
+                    }
 
-                $.getJSON(tagurl, callbackFuncWithData);
-                function callbackFuncWithData(tagdata){
-                    tagdata["data"]
+                    var div = document.createElement('div');
+                    div.setAttribute('class', 'container');
+                    div.setAttribute('id', "result" + currentresult);
+                    div.innerHTML = str;
+                    document.getElementById("cardbody" + currentresult).appendChild(div);
 
-                    $.each(tagdata["data"], function(i) {
-                        var div = document.createElement('span');
-                        div.setAttribute('class', 'badge badge-light cattags');
-                        div.innerHTML = tagdata["data"][i].attributes.title;
-                        document.getElementById("tagcontainer" + currentresult).appendChild(div);
-                    });
+                    $.getJSON(tagurl, callbackFuncWithData);
+                    function callbackFuncWithData(tagdata){
+                        tagdata["data"]
 
-                    $('#' + "card" + currentresult).hide();
-                    $('#' + "card" + currentresult).fadeIn(500);
+                        $.each(tagdata["data"], function(i) {
+                            var div = document.createElement('span');
+                            div.setAttribute('class', 'badge badge-light cattags');
+                            div.innerHTML = tagdata["data"][i].attributes.title;
+                            document.getElementById("tagcontainer" + currentresult).appendChild(div);
+                        });
+
+                        $('#' + "card" + currentresult).hide();
+                        $('#' + "card" + currentresult).fadeIn(500);
+                    }
                 }
 
                 
