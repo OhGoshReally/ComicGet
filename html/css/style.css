@@ -159,6 +159,7 @@ body {
 
 #realheader {
   box-shadow: inset 0 -20px 30px -13px rgba(0, 0, 0, 0.05);
+  margin: 0px;
 }
 
 .cattags {
@@ -213,5 +214,13 @@ body {
 
 .hiddenbuts {
   border: 0px;
+  font-weight: bold;
+}
+
+#menudiv{
+  margin-bottom: 30px;
+}
+
+#menucenter{
   font-weight: bold;
 }

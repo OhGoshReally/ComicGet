@@ -18,6 +18,10 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
         <link rel="shortcut icon" type="image/png" href="/static/images/flat.png"/>
+        <script src="/static/js/creatediv.js.js" rel="stylesheet"></script>
+        <script src="/static/js/card-toggle.js" rel="stylesheet"></script>
+        <script src="/static/js/scroll.js" rel="stylesheet"></script>
+        <script src="/static/js/addcomic.js" rel="stylesheet"></script>
         <script src="/static/js/resetlist.js" rel="stylesheet"></script>
         <script src="/static/js/search.js" rel="stylesheet"></script>
         <script src="/static/js/loading.js" rel="stylesheet"></script>
@@ -28,75 +32,6 @@
             var scrolled = 0
             var scrollTimer
             let animationcount = 0
-
-            function cardtoggleon (cont) {
-                if (scrolled === 0){
-                    if (animationcount < 2){
-                        animationcount++
-                        $(cont).show(250, function() {
-                            animationcount--
-                        });
-                    }
-                }
-            }
-            function cardtoggleoff (cont) {
-                animationcount++
-                $(cont).hide(250, function() {
-                    animationcount--
-                });
-            }
-            function isScroll(){
-                isScrolling();
-                scrolled = 1
-                scrollTimer = setTimeout(function(){
-                    scrolled = 0
-                }, 150);
-            }
-            function isScrolling() {
-                clearTimeout(scrollTimer);
-            }
-            function addcomic(comicname, pardiv, comicid) {
-                var parentdiv = document.getElementById(pardiv);
-                var rootdiv = document.getElementById(pardiv).parentNode.id
-                var div = document.createElement('div');
-                div.setAttribute('class', 'card-body');
-                div.setAttribute('id', "addedcard" + comicid);
-                div.setAttribute('style', "text-align: center; color: #57b86c;");
-                document.getElementById(rootdiv).appendChild(div);
-
-                var div = document.createElement('div');
-                div.setAttribute('class', 'card-body');
-                div.setAttribute('id', "addedinnercard1" + comicid);
-                document.getElementById("addedcard" + comicid).appendChild(div);
-
-                var div = document.createElement('i');
-                div.setAttribute('class', 'fas fa-check-circle');
-                div.setAttribute('id', "checkmark" + comicid);
-                div.setAttribute('style', "font-size: 40px;");
-                document.getElementById("addedinnercard1" + comicid).appendChild(div);
-
-                var div = document.createElement('div');
-                div.setAttribute('class', 'card-body');
-                div.setAttribute('style', 'padding-top: 0px;');
-                div.setAttribute('id', "addedinnercard2" + comicid);
-                document.getElementById("addedcard" + comicid).appendChild(div);
-                
-                var div = document.createElement('h3');
-                div.setAttribute('style', "font-weight: bold");
-                div.innerHTML = 'Added ' + comicname + ' to library';
-                document.getElementById("addedinnercard2" + comicid).appendChild(div);
-
-                $("addedcard" + comicid).hide();
-                $(parentdiv).hide(200, function(){
-                    $("addedcard" + comicid).show(200);
-                    waitremove = setTimeout(function(){
-                        $('#' + rootdiv).hide(200, function(){
-                            var element = document.getElementById(rootdiv);
-                            element.remove(element);
-                        });
-                    }, 1500);
-                });
-            }
         </script>
     </head>
     <body onscroll="isScroll()">
@@ -105,6 +40,40 @@
         <div class="container" style="text-align: center;">
             <h1 class="display-4" id="headertext1">> ComicGet <span class="blink">_</span></h1>
             <p class="lead" id="headertext2">A web application for downloading, storing and managing comics.</p>
+        </div>
+    </div>
+
+    <div class="container" id="menudiv">
+        <div class="d-flex justify-content-center" id="menucenter">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+            
+                <div class="collapse navbar-collapse w-100" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Add</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Library</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Wanted</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">System</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </div>
 

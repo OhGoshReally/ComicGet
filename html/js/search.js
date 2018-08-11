@@ -1,9 +1,7 @@
 function querySearch(){
 
     function cardtoggle (cont) { $(cont).toggle(250); }
-
     var entry = document.getElementById('myInput').value
-
     var url = 'https://kitsu.io/api/edge/manga?filter[text]='
     var kitsuurl = 'https://kitsu.io/manga/'
     var queryurl = encodeURI(url + entry);
@@ -16,7 +14,7 @@ function querySearch(){
     function callbackFuncWithData(data){
 
         if (data["data"].length > 0) {
-            results = "<h5>Found " + data["data"].length + " results.</h5>"
+            results = "<h5>Found <span id=\"resultnumber\">" + data["data"].length + "</span> results.</h5>"
             
             var div = document.createElement('div');
             div.setAttribute('id', 'numresults');
