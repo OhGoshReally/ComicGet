@@ -37,15 +37,21 @@ function querySearch(){
                 document.getElementById('resultbar').appendChild(div);
 
                 var div = document.createElement('div');
+                div.setAttribute('class', 'container');
+                div.setAttribute('style', 'padding: 0');
+                div.setAttribute('id', "firstcontainer" + currentresult);
+                document.getElementById("card" + currentresult).appendChild(div);
+
+                var div = document.createElement('div');
                 div.setAttribute('class', 'container-fluid');
                 div.setAttribute('style', 'padding: 0; cursor: pointer;');
                 div.setAttribute('id', "innercontainer1" + currentresult);
-                document.getElementById("card" + currentresult).appendChild(div);
+                document.getElementById("firstcontainer" + currentresult).appendChild(div);
                 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'container-fluid');
                 div.setAttribute('id', "innercontainer2" + currentresult);
-                document.getElementById("card" + currentresult).appendChild(div);
+                document.getElementById("firstcontainer" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'card-body bottomcardbody');
@@ -120,7 +126,7 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-2');
                 div.setAttribute('id', "bottomcol25" + currentresult);
-                div.innerHTML = '<button type="button" class="btn btn-success hiddenbuts">Add <i class="far fa-arrow-alt-circle-down"></i></button>';
+                div.innerHTML = '<button type="button" class="btn btn-success hiddenbuts" onclick=\u0027addcomic("' + data["data"][i].attributes.canonicalTitle + ' (' + ((data["data"][i].attributes.startDate).slice(0, 4)) + ')' + '", "' + 'firstcontainer' + currentresult + '", "' + data["data"][i].id + '")\u0027>Add <i class="far fa-arrow-alt-circle-down"></i></button>';
                 document.getElementById("bottomrow2" + currentresult).appendChild(div);
 
                 $('#innercontainer2' + currentresult).hide();
@@ -181,7 +187,7 @@ function querySearch(){
                 var published = data["data"][i].attributes.startDate
                 var ongoing = data["data"][i].attributes.status
                 var serialization = data["data"][i].attributes.serialization
-                var str = "<h5>" + data["data"][i].attributes.canonicalTitle
+                var str = '<h5><span id="card' + currentresult + 'name">' + data["data"][i].attributes.canonicalTitle
                 var syno = data["data"][i].attributes.synopsis
                 var rating = data["data"][i].attributes.averageRating
 
