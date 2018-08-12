@@ -217,10 +217,19 @@ body {
   font-weight: bold;
 }
 
-#menudiv{
-  margin-bottom: 30px;
-}
-
 #menucenter{
   font-weight: bold;
+}
+
+.menuitems {
+  cursor: pointer;
+}
+
+#submenudiv {
+  font-weight: bold;
+  opacity: 0.5;
+}
+
+#divider {
+  margin: 15px;
 }
