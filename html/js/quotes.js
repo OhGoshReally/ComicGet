@@ -3,10 +3,6 @@ var quotes = [
     'I can\'t believe it\'s not butter.',
     'They don\'t think it be like it is but it do.',
     'OwO What\'s this?',
-    'Why haven\'t you made your game yet?'
+    'Why haven\'t you made your game yet?',
+    'Whomst tf discovered gravity'
 ]
-
-function newQuote() {
-    var randomNumber = Math.floor(Math.random() * (quotes.length));
-    document.getElementById('headertext2').innerHTML = quotes[randomNumber];
-}

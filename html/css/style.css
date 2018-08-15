@@ -132,6 +132,7 @@ body {
 #headertext2 {
   font-size: 1.20rem;
   color: #464646;
+  font-style: italic;
 }
 
 #myInput::placeholder {
@@ -243,4 +244,22 @@ body {
   bottom: 5px;
   position: relative;
   margin-right: -13px;
+}
+
+.wop {
+  color: rgba(0,0,0,.5);
+  text-align: center;
+  font-weight: bold;
+}
+
+#topbutton{
+  cursor: pointer;
+}
+
+#topbutton:hover {
+  filter: brightness(115%);
+}
+
+#subnavbar {
+  padding: 0px;
 }
