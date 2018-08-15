@@ -225,6 +225,10 @@ body {
   cursor: pointer;
 }
 
+.submenuitems {
+  cursor: pointer;
+}
+
 #submenudiv {
   font-weight: bold;
   opacity: 0.5;
@@ -232,4 +236,11 @@ body {
 
 #divider {
   margin: 15px;
+}
+
+#appIcon {
+  height: 57px;
+  bottom: 5px;
+  position: relative;
+  margin-right: -13px;
 }
