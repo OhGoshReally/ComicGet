@@ -34,6 +34,8 @@ function querySearch(){
                 div.setAttribute('onmouseleave', 'cardtoggleoff("#innercontainer2' + currentresult + '")');
                 document.getElementById('resultbar').appendChild(div);
 
+                $('#' + "card" + currentresult).hide();
+
                 var div = document.createElement('div');
                 div.setAttribute('class', 'container');
                 div.setAttribute('style', 'padding: 0');
@@ -248,7 +250,6 @@ function querySearch(){
                             document.getElementById("tagcontainer" + currentresult).appendChild(div);
                         });
 
-                        $('#' + "card" + currentresult).hide();
                         $('#' + "card" + currentresult).fadeIn(500);
                     }
                 }

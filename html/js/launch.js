@@ -4,7 +4,7 @@ function newQuote() {
 }
 newQuote()
 $("#submenudiv").hide();
-$("#menu-Home").hide();
+$("#menu-Add").hide();
 $("#menu-Library").hide();
 $("#menu-Wanted").hide();
 $("#menu-Settings").hide();
