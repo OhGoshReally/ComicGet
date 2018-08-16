@@ -21,34 +21,68 @@ function menutoggle(thebutton){
     });
 
     if (hidethisdiv !== showthisdiv){
-        $('#' + hidethisdiv + ", #submenudiv").hide(100, function(){
-            $('#' + showthisdiv).show(100);
+        $('#' + hidethisdiv + ", #submenudiv").fadeOut(100, function(){
+            $('#' + showthisdiv).fadeIn(100);
+            $('.submenuoptions').hide();
             if (showthisdiv == "menu-Settings"){
-                $('#submenuoptions2').hide();
-                $('#submenuoptions').show();
-                $('#submenudiv').show(100);
-            } else if (hidethisdiv == "menu-Settings") {
-                if (showthisdiv == "menu-System"){
-                    $('#submenuoptions').hide();
-                    $('#submenuoptions2').show();
-                    $('#submenudiv').show(100);
-                } else {
-                    $('#submenudiv').hide(100);
-                }
+                $('#submenuoptions-settings').show();
             }
-            if (showthisdiv == "menu-System"){
-                $('#submenuoptions').hide()
-                $('#submenuoptions2').show();
-                $('#submenudiv').show(100);
-            } else if (hidethisdiv == "menu-System") {
-                if (showthisdiv == "menu-Settings"){
-                    $('#submenuoptions2').hide();
-                    $('#submenuoptions').show();
-                    $('#submenudiv').show(100);
-                } else {
-                    $('#submenudiv').hide(100);
-                }
+            if (showthisdiv == "menu-System") {
+                $('#submenuoptions-system').show();
             }
+            if (showthisdiv == "menu-Home") {
+                $('#submenuoptions-home').show();
+            }
+            if (showthisdiv == "menu-Activity") {
+                $('#submenuoptions-activity').show();
+            }
+            if (showthisdiv == "menu-Wanted") {
+                $('#submenuoptions-wanted').show();
+            }
+            $('#submenudiv').fadeIn(100);
+        });
+    }
+}
+
+function submenutoggle(thebutton){
+    var hidethisdiv
+    var showthisdiv
+    var innerli = [];
+    var allsubmenuitems = document.getElementsByClassName("submenuoptions");
+    var allsubmenuitems = Array.from(allsubmenuitems);
+    var allsubmenuitems = allsubmenuitems.filter(word => word.style.display !== "none");
+
+    var count = allsubmenuitems[0].childNodes.length
+
+    for (var i = 0; i < count; i++) {
+        if (allsubmenuitems[0].childNodes[i].nodeName == "LI") {
+            innerli.push(allsubmenuitems[0].childNodes[i]);
+        }
+    }
+
+    var allsubmenuitems = innerli
+
+    $.each(allsubmenuitems, function(i) {
+        var cachename = allsubmenuitems[i].id.replace(/item[-]/igm, "");
+        var act = "active"
+        if (allsubmenuitems[i].className.includes(act)) {
+            var element = document.getElementById(allsubmenuitems[i].id);
+            element.classList.remove("active");
+            hidethisdiv = cachename
+        }
+        if (allsubmenuitems[i].id == thebutton) {
+            var element = document.getElementById(allsubmenuitems[i].id);
+            element.classList.add("active")
+            showthisdiv = cachename
+        }
+    });
+
+    if (hidethisdiv !== showthisdiv){
+        $('#' + hidethisdiv).fadeOut(100, function(){
+
+            $('#' + showthisdiv).fadeIn(100);
+
+
         });
     }
 }

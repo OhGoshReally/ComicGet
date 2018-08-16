@@ -63,13 +63,10 @@
                 <div class="collapse navbar-collapse w-100" id="navbarTogglerDemo02">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center" id="menuoptions">
                         <li class="nav-item menuitems active" id="item-menu-Home">
-                            <a class="nav-link" onclick='menutoggle("item-menu-Home")'>Home </a>
+                            <a class="nav-link" onclick='menutoggle("item-menu-Home")'>Home</a>
                         </li>
-                        <li class="nav-item menuitems" id="item-menu-Add">
-                            <a class="nav-link" onclick='menutoggle("item-menu-Add")'>Add</a>
-                        </li>
-                        <li class="nav-item menuitems" id="item-menu-Library">
-                            <a class="nav-link" onclick='menutoggle("item-menu-Library")'>Library</a>
+                        <li class="nav-item menuitems" id="item-menu-Activity">
+                            <a class="nav-link" onclick='menutoggle("item-menu-Activity")'>Activity</a>
                         </li>
                         <li class="nav-item menuitems" id="item-menu-Wanted">
                             <a class="nav-link" onclick='menutoggle("item-menu-Wanted")'>Wanted</a>
@@ -86,55 +83,89 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div id="separator">
+            </div>
+        </div>
+    </div>
+
     <div class="container" id="submenudiv">
         <div class="d-flex justify-content-center" id="submenucenter">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center" id="subnavbar">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center bg-transparent" id="subnavbar">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
             
                 <div class="collapse navbar-collapse w-100">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center" id="submenuoptions">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center submenuoptions" id="submenuoptions-settings">
                         <li class="nav-item submenuitems active" id="item-submenu-Media_Management">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Media_Management")'>Media Management</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Media_Management")'>Media Management</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Profiles">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Profiles")'>Profiles</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Profiles")'>Profiles</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Quality">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Quality")'>Quality</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Quality")'>Quality</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Indexers">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Indexers")'>Indexers</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Indexers")'>Indexers</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Connect">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Connect")'>Connect</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Connect")'>Connect</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Metadata">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Metadata")'>Metadata</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Metadata")'>Metadata</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-General">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-General")'>General</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-General")'>General</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-UI">
-                                <a class="nav-link" onclick='menutoggle("item-submenu-UI")'>UI</a>
+                                <a class="nav-link" onclick='submenutoggle("item-submenu-UI")'>UI</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center" id="submenuoptions2">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center submenuoptions" id="submenuoptions-system">
                         <li class="nav-item submenuitems active" id="item-submenu-Status">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Status")'>Status</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Status")'>Status</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Updates">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Updates")'>Updates</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Updates")'>Updates</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Tasks">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Tasks")'>Tasks</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Tasks")'>Tasks</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Backup">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Backup")'>Backup</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Backup")'>Backup</a>
                         </li>
                         <li class="nav-item submenuitems" id="item-submenu-Logs">
-                            <a class="nav-link" onclick='menutoggle("item-submenu-Logs")'>Logs</a>
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Logs")'>Logs</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center submenuoptions" id="submenuoptions-home">
+                        <li class="nav-item submenuitems active" id="item-submenu-Library">
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Library")'>Library</a>
+                        </li>
+                        <li class="nav-item submenuitems" id="item-submenu-Add">
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Add")'>Add</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center submenuoptions" id="submenuoptions-activity">
+                        <li class="nav-item submenuitems active" id="item-submenu-Queue">
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Queue")'>Queue</a>
+                        </li>
+                        <li class="nav-item submenuitems" id="item-submenu-History">
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-History")'>History</a>
+                        </li>
+                        <li class="nav-item submenuitems" id="item-submenu-Blacklist">
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Blacklist")'>Blacklist</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-center submenuoptions" id="submenuoptions-wanted">
+                        <li class="nav-item submenuitems active" id="item-submenu-Missing">
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Missing")'>Missing</a>
+                        </li>
+                        <li class="nav-item submenuitems" id="item-submenu-Cutoff-Unmet">
+                            <a class="nav-link" onclick='submenutoggle("item-submenu-Cutoff-Unmet")'>Cutoff Unmet</a>
                         </li>
                     </ul>
                 </div>
@@ -145,51 +176,65 @@
     <div id="divider"></div>
 
     <div class="container" id="menu-Home">
-        <div>
+        <div class="container" id="submenu-Library">
             <div class="card-body">
-                <h1 class="wop">Work in progress.</h1>
+                    <h1 class="wop">Work in progress.</h1>
             </div>
         </div>
-    </div>
+        <div class="container" id="submenu-Add">
+            <div>
+                <div class="card-body" id="cardbod">
+                    <div class="container">
+                        <div class="row" id="highrow">
+                            <h5 class="card-title">Enter name:</h5>
+                        </div>
+                        <div class="row" id="midrow">
+                            <div class="col-2"></div>
 
-    <div class="container" id="menu-Add">
-        <div>
-            <div class="card-body" id="cardbod">
-                <div class="container">
-                    <div class="row" id="highrow">
-                        <h5 class="card-title">Enter name:</h5>
-                    </div>
-                    <div class="row" id="midrow">
-                        <div class="col-2"></div>
-                        <div class="col-8">
-                            <div class="row">
-                                <div class="col-2" style="padding-right: 0px;">
-                                    <select class="custom-select" id="searchselect">
-                                        <option selected="" value="1">Manga</option>
-                                        <option value="2">Comics</option>
-                                    </select>
-                                </div>
-                                <div class="col-10" style="padding-left: 0px;">
-                                    <i class="fas fa-search" id="seaicon"></i>
-                                    <input class="form-control" type="text" id="myInput" onkeyup="IdleSearch()" placeholder="Enter the name of a comic">
+                            <div class="col-8">
+                                <div id="entiresearchbox">
+                                    <div class="row">
+                                        <div class="col-2" id="searchselectdiv">
+                                            <select class="custom-select" id="searchselect">
+                                                <option selected="" value="1">Manga</option>
+                                                <option value="2">Comics</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-10" id="searchboxdiv">
+                                            <i class="fas fa-search" id="seaicon"></i>
+                                            <input class="form-control" type="text" id="myInput" onkeyup="IdleSearch()" placeholder="Enter the name of a comic">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="col-2"></div>
                         </div>
-                        <div class="col-2"></div>
                     </div>
-                </div>
-                <div class="row" id="lowrow">
-                    <div id="loadbar"></div>
-                </div>
-                <div class="row" id="vrylowrow">
-                    <div id="resultbar"></div>
+                    <div class="row" id="lowrow">
+                        <div id="marginbar"></div>
+                        <div id="loadbar"></div>
+                    </div>
+                    <div class="row" id="vrylowrow">
+                        <div id="resultbar"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container" id="menu-Library">
-        <div>
+    <div class="container" id="menu-Activity">
+        <div class="container" id="submenu-Queue">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-History">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Blacklist">
             <div class="card-body">
                     <h1 class="wop">Work in progress.</h1>
             </div>
@@ -197,7 +242,12 @@
     </div>
 
     <div class="container" id="menu-Wanted">
-        <div>
+        <div class="container" id="submenu-Missing">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Cutoff-Unmet">
             <div class="card-body">
                     <h1 class="wop">Work in progress.</h1>
             </div>
@@ -205,7 +255,42 @@
     </div>
 
     <div class="container" id="menu-Settings">
-        <div>
+        <div class="container" id="submenu-Media_Management">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Profiles">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Quality">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Indexers">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Connect">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Metadata">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-General">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-UI">
             <div class="card-body">
                     <h1 class="wop">Work in progress.</h1>
             </div>
@@ -213,9 +298,29 @@
     </div>
 
     <div class="container" id="menu-System">
-        <div>
+        <div class="container" id="submenu-Status">
             <div class="card-body">
-                <h1 class="wop">Work in progress.</h1>
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Updates">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Tasks">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Backup">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
+            </div>
+        </div>
+        <div class="container" id="submenu-Logs">
+            <div class="card-body">
+                    <h1 class="wop">Work in progress.</h1>
             </div>
         </div>
     </div>

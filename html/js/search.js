@@ -6,6 +6,7 @@ function querySearch(){
     var kitsuurl = 'https://kitsu.io/manga/'
     var queryurl = encodeURI(url + entry);
     var results = ''
+    var string
 
     console.log(queryurl);
 
@@ -126,7 +127,17 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-2');
                 div.setAttribute('id', "bottomcol25" + currentresult);
-                div.innerHTML = '<button type="button" class="btn btn-success hiddenbuts" onclick=\u0027addcomic("' + data["data"][i].attributes.canonicalTitle + ' (' + ((data["data"][i].attributes.startDate).slice(0, 4)) + ')' + '", "' + 'firstcontainer' + currentresult + '", "' + data["data"][i].id + '")\u0027>Add <i class="far fa-arrow-alt-circle-down"></i></button>';
+
+                try {
+                    string = ' (' + (((data["data"][i].attributes.startDate).slice(0, 4))) + ')'
+                }
+                catch(error) {
+                    string = " "
+                }
+                
+                string
+
+                div.innerHTML = '<button type="button" class="btn btn-success hiddenbuts" onclick=\u0027addcomic("' + data["data"][i].attributes.canonicalTitle + string + '", "' + 'firstcontainer' + currentresult + '", "' + data["data"][i].id + '")\u0027>Add <i class="far fa-arrow-alt-circle-down"></i></button>';
                 document.getElementById("bottomrow2" + currentresult).appendChild(div);
 
                 $('#innercontainer2' + currentresult).hide();
@@ -187,12 +198,12 @@ function querySearch(){
                 var published = data["data"][i].attributes.startDate
                 var ongoing = data["data"][i].attributes.status
                 var serialization = data["data"][i].attributes.serialization
-                var str = '<h5><span id="card' + currentresult + 'name">' + data["data"][i].attributes.canonicalTitle
+                var str = '<h5 class="comic-titles"><span id="card' + currentresult + 'name">' + data["data"][i].attributes.canonicalTitle
                 var syno = data["data"][i].attributes.synopsis
                 var rating = data["data"][i].attributes.averageRating
 
-                if (syno.length > 800) {
-                    syno = syno.slice(0, 800);
+                if (syno.length > 700) {
+                    syno = syno.slice(0, 700);
                     syno = syno + "..."
                 }
 
@@ -226,7 +237,7 @@ function querySearch(){
                 
                 $.getJSON(chaptersurl, getChapters);
                 function getChapters(chapters){
-                    str = str + '<h6>' + chapters["data"].length + ' Chapters</h6>'
+                    str = str + '<h6 class="chapter-titles">' + chapters["data"].length + ' Chapters</h6>'
                 
 
                     if (syno !== null) {
