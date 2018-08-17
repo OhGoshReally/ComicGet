@@ -7,8 +7,29 @@ function querySearch(){
     var queryurl = encodeURI(url + entry);
     var results = ''
     var string
+    var allcards = [];
+    var count
 
-    console.log(queryurl);
+    //console.log(queryurl);
+
+    function addtheresults(thediv){
+        allcards.push(thediv);
+    }
+
+    function beginShow() {
+        var i = 0
+        function slowlyAdd() {
+            setTimeout(function(){
+                $(allcards[i]).fadeIn(250, function(){
+                    i++
+                    if (i < allcards.length) {
+                        slowlyAdd();
+                    }
+                });
+            }, 50);
+        }
+        slowlyAdd();
+    }
 
     $.getJSON(queryurl, callbackFuncWithData);
 
@@ -17,14 +38,25 @@ function querySearch(){
         if (data["data"].length > 0) {
             results = "<h5>Found <span id=\"resultnumber\">" + data["data"].length + "</span> results.</h5>"
             
+            if (document.getElementById("resultbar").childNodes.length > 0) {
+                var myNode = document.getElementById("resultbar");
+                while (myNode.firstChild) {
+                    myNode.removeChild(myNode.firstChild);
+                }
+            }
+
             var div = document.createElement('div');
             div.setAttribute('id', 'numresults');
             div.innerHTML = results;
             document.getElementById('resultbar').appendChild(div);
             $('numresults').hide();
             $('numresults').fadeIn(500);
+
+            count = 0
     
             $.each(data["data"], function(i) {
+
+                count++
 
                 var currentresult = [i][0]
 
@@ -109,7 +141,7 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-4');
                 div.setAttribute('id', "bottomcol22" + currentresult);
-                div.innerHTML = '<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="/home/dan/bruh/">';
+                div.innerHTML = '<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="/home/dan/fakepath/">';
                 document.getElementById("bottomrow2" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
@@ -255,17 +287,23 @@ function querySearch(){
                         tagdata["data"]
 
                         $.each(tagdata["data"], function(i) {
-                            var div = document.createElement('span');
-                            div.setAttribute('class', 'badge badge-light cattags');
-                            div.innerHTML = tagdata["data"][i].attributes.title;
-                            document.getElementById("tagcontainer" + currentresult).appendChild(div);
-                        });
+                            try {
+                                var div = document.createElement('span');
+                                div.setAttribute('class', 'badge badge-light cattags');
+                                div.innerHTML = tagdata["data"][i].attributes.title;
+                                document.getElementById("tagcontainer" + currentresult).appendChild(div);
+                            } catch (error) {
 
-                        $('#' + "card" + currentresult).fadeIn(500);
+                            }
+                        });
                     }
                 }
 
-                
+                addtheresults('#' + "card" + currentresult);
+
+                if (count == data["data"].length) {
+                    beginShow();
+                }
             });
         } else {
             resetList();
@@ -273,4 +311,5 @@ function querySearch(){
         stopLoad();
         searching = false
     }
+    
 }
