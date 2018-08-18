@@ -114,7 +114,8 @@ body {
 
 .jumbotron-fluid {
   background-color: rgba(235, 235, 235, 1);
-  padding: 32px 0px 32px 0px;
+  /*padding: 32px 0px 32px 0px;*/
+  padding: 22px 0px 22px 0px;
 }
 
 .form-control {

@@ -63,8 +63,9 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'card resultcards');
                 div.setAttribute('id', "card" + currentresult);
-                div.setAttribute('onmouseover', 'cardtoggleon("#innercontainer2' + currentresult + '")');
-                div.setAttribute('onmouseleave', 'cardtoggleoff("#innercontainer2' + currentresult + '")');
+                div.setAttribute('style', 'display: none;');
+                div.setAttribute('onmouseover', 'cardtoggleon("innercontainer2' + currentresult + '")');
+                div.setAttribute('onmouseleave', 'cardtoggleoff("innercontainer2' + currentresult + '")');
                 document.getElementById('resultbar').appendChild(div);
 
                 $('#' + "card" + currentresult).hide();
@@ -77,12 +78,12 @@ function querySearch(){
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'container-fluid');
-                div.setAttribute('style', 'padding: 0; cursor: pointer;');
+                div.setAttribute('style', 'padding: 0;');
                 div.setAttribute('id', "innercontainer1" + currentresult);
                 document.getElementById("firstcontainer" + currentresult).appendChild(div);
                 
                 var div = document.createElement('div');
-                div.setAttribute('class', 'container-fluid');
+                div.setAttribute('class', 'container-fluid addon-card');
                 div.setAttribute('id', "innercontainer2" + currentresult);
                 document.getElementById("firstcontainer" + currentresult).appendChild(div);
 
