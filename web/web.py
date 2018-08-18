@@ -57,6 +57,11 @@ class rhandler(BaseHTTPRequestHandler):
     def _search(self, search):
         self._set_headers(header={'keyword':'Content-type', 'value': 'application/json'})
         indexer = kitsu.KitsuIndexer()
+        indexer.create_cache()
+        cache_dir = os.path.join('cache', indexer.get_cacher().get_id())
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir)
+        indexer.get_cacher().set_cache(cache_dir)
         js = json.dumps(indexer.search(text_string=search))
         self.wfile.write(js.encode())
         

@@ -1,6 +1,7 @@
 import requests
+import os
 
-from .baseindexer import BaseIndexer
+from .baseindexer import BaseIndexer, BaseCacher
 
 class KitsuIndexer(BaseIndexer):
     api_path = "https://kitsu.io/api/edge/manga"
@@ -9,13 +10,16 @@ class KitsuIndexer(BaseIndexer):
         'Content-Type': 'application/vnd.api+json'
         }
     indexer_id = 'KITSU'
+    cacher = None
 
-    def __init__(self, user_agent=None):
+    def __init__(self, user_agent=None, cache_dir=None):
         super().__init__(user_agent)
         self.api_headers['user-agent'] = self.user_agent
+        if cache_dir:
+            self.cacher = KitsuCacher()
+            self.cacher.set_cache(cache_dir)
 
     def search(self, text_string=None, genre_list=None, limit=None, offset=None):
-        keys = ['id', 'type', '']
         data = {}
         if (text_string != None):
             data['filter[text]'] = text_string
@@ -25,7 +29,7 @@ class KitsuIndexer(BaseIndexer):
             data['page[limit]'] = limit
         if (offset != None):
             data['page[offset]'] = offset
-        
+
         r = requests.get(self.api_path, params=data, headers=self.api_headers)
 
         j = r.json()
@@ -33,7 +37,7 @@ class KitsuIndexer(BaseIndexer):
         response = {}
         response['indexer_id'] = self.indexer_id
         response['data'] = []
-        
+
         for result in j['data']:
             attributes = result['attributes']
             posters = attributes['posterImage']
@@ -49,7 +53,7 @@ class KitsuIndexer(BaseIndexer):
                 'chapter_count': attributes['chapterCount'],
                 'volume_count': attributes['volumeCount'],
                 'serialization': attributes['serialization'],
-                'average_rating': attributes['averageRating']       
+                'average_rating': attributes['averageRating']
             }
             sizes = ['tiny', 'small', 'medium', 'large', 'original']
             poster = {}
@@ -65,13 +69,36 @@ class KitsuIndexer(BaseIndexer):
                 for size in sizes:
                     if size in covers:
                         cover[size] = covers[size]
-            
+
             manga['cover'] = cover
+
+            self.cache_imgs(manga['id'], 'poster', poster)
+            self.cache_imgs(manga['id'], 'cover', cover)
 
             response['data'].append(manga)
 
+        
+
         return response
 
+    def get_cacher(self):
+        return self.cacher
 
-    def get_id(self):
-        return self.indexer_id
+
+    def cache_imgs(self, id, type, images):
+        if not images:
+            return None
+        for key, val in images.items():
+            print("caching (%s) with (%s)" % (key, val))
+            if not self.cacher.is_cached(os.path.join(id, type, key + ".jpg")):
+                print("caching (%s) with (%s)" % (key, val))
+                self.cacher.cache(os.path.join(id, type, key + ".jpg"), val)
+
+
+    def create_cache(self, cache_dir=None):
+        self.cacher = KitsuCacher()
+        self.cacher.set_cache(cache_dir)
+
+
+class KitsuCacher(BaseCacher):
+    indexer_id = 'KITSU'
