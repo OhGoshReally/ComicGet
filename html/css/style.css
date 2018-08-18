@@ -2,6 +2,8 @@ body {
   /*background-color: blue;*/
     font-family: 'Raleway', sans-serif;
     background-color: #f7f7f7;
+    overflow: overlay;
+    overflow-x: hidden;
 }
 
 .material-icons {
@@ -71,7 +73,7 @@ body {
 }
 
 #myInput {
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
     font-family: 'open sans', sans-serif;
@@ -106,11 +108,14 @@ body {
   border-top-right-radius: 0px;
   border-right: 0;
   background-color: rgba(241, 241, 241, 1);
+  font-weight: bold;
+  color: #70757a;
 }
 
 .jumbotron-fluid {
   background-color: rgba(235, 235, 235, 1);
-  padding: 32px 0px 32px 0px;
+  /*padding: 32px 0px 32px 0px;*/
+  padding: 22px 0px 22px 0px;
 }
 
 .form-control {
@@ -132,6 +137,7 @@ body {
 #headertext2 {
   font-size: 1.20rem;
   color: #464646;
+  font-style: italic;
 }
 
 #myInput::placeholder {
@@ -159,6 +165,7 @@ body {
 
 #realheader {
   box-shadow: inset 0 -20px 30px -13px rgba(0, 0, 0, 0.05);
+  margin: 0px;
 }
 
 .cattags {
@@ -213,5 +220,90 @@ body {
 
 .hiddenbuts {
   border: 0px;
+  font-weight: bold;
+}
+
+#menucenter{
+  font-weight: bold;
+}
+
+.menuitems {
+  cursor: pointer;
+}
+
+.submenuitems {
+  cursor: pointer;
+}
+
+#submenudiv {
+  font-weight: bold;
+  opacity: 0.5;
+  text-shadow: 0px 1px white;
+}
+
+#divider {
+  margin: 15px;
+}
+
+#appIcon {
+  height: 57px;
+  bottom: 5px;
+  position: relative;
+  margin-right: -13px;
+}
+
+.wop {
+  color: rgba(0,0,0,.5);
+  text-align: center;
+  font-weight: bold;
+}
+
+#topbutton{
+  cursor: pointer;
+}
+
+#topbutton:hover {
+  filter: brightness(115%);
+}
+
+#subnavbar {
+  padding: 0px;
+}
+
+#separator {
+  background-color: #7c7c7c00;
+  height: 1px;
+  width: 30%;
+  box-shadow: 0px -4px 20px 0px #000000;
+}
+
+#entiresearchbox {
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  border-radius: .25rem;
+}
+
+#searchselectdiv {
+  padding-right: 0px;
+}
+
+#searchboxdiv {
+  padding-left: 0px;
+}
+
+#marginbar {
+  margin-bottom: 30px;
+}
+
+.card-title {
+  color: rgba(0,0,0,.5);
+}
+
+.comic-titles {
+  color: #DBB1CD;
+  color: #D1B894;
+  font-weight: bold;
+}
+
+.chapter-titles {
   font-weight: bold;
 }

@@ -1,51 +1,91 @@
 function querySearch(){
 
     function cardtoggle (cont) { $(cont).toggle(250); }
-
     var entry = document.getElementById('myInput').value
-
     var url = 'https://kitsu.io/api/edge/manga?filter[text]='
     var kitsuurl = 'https://kitsu.io/manga/'
     var queryurl = encodeURI(url + entry);
     var results = ''
+    var string
+    var allcards = [];
+    var count
 
-    console.log(queryurl);
+    //console.log(queryurl);
+
+    function addtheresults(thediv){
+        allcards.push(thediv);
+    }
+
+    function beginShow() {
+        var i = 0
+        function slowlyAdd() {
+            setTimeout(function(){
+                $(allcards[i]).fadeIn(250, function(){
+                    i++
+                    if (i < allcards.length) {
+                        slowlyAdd();
+                    }
+                });
+            }, 50);
+        }
+        slowlyAdd();
+    }
 
     $.getJSON(queryurl, callbackFuncWithData);
 
     function callbackFuncWithData(data){
 
         if (data["data"].length > 0) {
-            results = "<h5>Found " + data["data"].length + " results.</h5>"
+            results = "<h5>Found <span id=\"resultnumber\">" + data["data"].length + "</span> results.</h5>"
             
+            if (document.getElementById("resultbar").childNodes.length > 0) {
+                var myNode = document.getElementById("resultbar");
+                while (myNode.firstChild) {
+                    myNode.removeChild(myNode.firstChild);
+                }
+            }
+
             var div = document.createElement('div');
             div.setAttribute('id', 'numresults');
             div.innerHTML = results;
             document.getElementById('resultbar').appendChild(div);
             $('numresults').hide();
             $('numresults').fadeIn(500);
+
+            count = 0
     
             $.each(data["data"], function(i) {
+
+                count++
 
                 var currentresult = [i][0]
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'card resultcards');
                 div.setAttribute('id', "card" + currentresult);
-                div.setAttribute('onmouseover', 'cardtoggleon("#innercontainer2' + currentresult + '")');
-                div.setAttribute('onmouseleave', 'cardtoggleoff("#innercontainer2' + currentresult + '")');
+                div.setAttribute('style', 'display: none;');
+                div.setAttribute('onmouseover', 'cardtoggleon("innercontainer2' + currentresult + '")');
+                div.setAttribute('onmouseleave', 'cardtoggleoff("innercontainer2' + currentresult + '")');
                 document.getElementById('resultbar').appendChild(div);
+
+                $('#' + "card" + currentresult).hide();
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'container');
+                div.setAttribute('style', 'padding: 0');
+                div.setAttribute('id', "firstcontainer" + currentresult);
+                document.getElementById("card" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'container-fluid');
-                div.setAttribute('style', 'padding: 0; cursor: pointer;');
+                div.setAttribute('style', 'padding: 0;');
                 div.setAttribute('id', "innercontainer1" + currentresult);
-                document.getElementById("card" + currentresult).appendChild(div);
+                document.getElementById("firstcontainer" + currentresult).appendChild(div);
                 
                 var div = document.createElement('div');
-                div.setAttribute('class', 'container-fluid');
+                div.setAttribute('class', 'container-fluid addon-card');
                 div.setAttribute('id', "innercontainer2" + currentresult);
-                document.getElementById("card" + currentresult).appendChild(div);
+                document.getElementById("firstcontainer" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'card-body bottomcardbody');
@@ -102,7 +142,7 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-4');
                 div.setAttribute('id', "bottomcol22" + currentresult);
-                div.innerHTML = '<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="/home/dan/bruh/">';
+                div.innerHTML = '<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="/home/dan/fakepath/">';
                 document.getElementById("bottomrow2" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
@@ -120,7 +160,17 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-2');
                 div.setAttribute('id', "bottomcol25" + currentresult);
-                div.innerHTML = '<button type="button" class="btn btn-success hiddenbuts">Add <i class="far fa-arrow-alt-circle-down"></i></button>';
+
+                try {
+                    string = ' (' + (((data["data"][i].attributes.startDate).slice(0, 4))) + ')'
+                }
+                catch(error) {
+                    string = " "
+                }
+                
+                string
+
+                div.innerHTML = '<button type="button" class="btn btn-success hiddenbuts" onclick=\u0027addcomic("' + data["data"][i].attributes.canonicalTitle + string + '", "' + 'firstcontainer' + currentresult + '", "' + data["data"][i].id + '")\u0027>Add <i class="far fa-arrow-alt-circle-down"></i></button>';
                 document.getElementById("bottomrow2" + currentresult).appendChild(div);
 
                 $('#innercontainer2' + currentresult).hide();
@@ -181,12 +231,12 @@ function querySearch(){
                 var published = data["data"][i].attributes.startDate
                 var ongoing = data["data"][i].attributes.status
                 var serialization = data["data"][i].attributes.serialization
-                var str = "<h5>" + data["data"][i].attributes.canonicalTitle
+                var str = '<h5 class="comic-titles"><span id="card' + currentresult + 'name">' + data["data"][i].attributes.canonicalTitle
                 var syno = data["data"][i].attributes.synopsis
                 var rating = data["data"][i].attributes.averageRating
 
-                if (syno.length > 800) {
-                    syno = syno.slice(0, 800);
+                if (syno.length > 700) {
+                    syno = syno.slice(0, 700);
                     syno = syno + "..."
                 }
 
@@ -214,33 +264,47 @@ function querySearch(){
                 }
 
                 str = str + '</h5>'
-
-                if (syno !== null) {
-                    str = str + '<p class="prevsyn" style="margin: 0;">' + syno + "</p>"
-                }
-
-                var div = document.createElement('div');
-                div.setAttribute('class', 'container');
-                div.setAttribute('id', "result" + currentresult);
-                div.innerHTML = str;
-                document.getElementById("cardbody" + currentresult).appendChild(div);
-
-                $.getJSON(tagurl, callbackFuncWithData);
-                function callbackFuncWithData(tagdata){
-                    tagdata["data"]
-
-                    $.each(tagdata["data"], function(i) {
-                        var div = document.createElement('span');
-                        div.setAttribute('class', 'badge badge-light cattags');
-                        div.innerHTML = tagdata["data"][i].attributes.title;
-                        document.getElementById("tagcontainer" + currentresult).appendChild(div);
-                    });
-
-                    $('#' + "card" + currentresult).hide();
-                    $('#' + "card" + currentresult).fadeIn(500);
-                }
+                
+                var chaptersurl = data["data"][i].relationships.chapters.links.self
 
                 
+                $.getJSON(chaptersurl, getChapters);
+                function getChapters(chapters){
+                    str = str + '<h6 class="chapter-titles">' + chapters["data"].length + ' Chapters</h6>'
+                
+
+                    if (syno !== null) {
+                        str = str + '<p class="prevsyn" style="margin: 0;">' + syno + "</p>"
+                    }
+
+                    var div = document.createElement('div');
+                    div.setAttribute('class', 'container');
+                    div.setAttribute('id', "result" + currentresult);
+                    div.innerHTML = str;
+                    document.getElementById("cardbody" + currentresult).appendChild(div);
+
+                    $.getJSON(tagurl, callbackFuncWithData);
+                    function callbackFuncWithData(tagdata){
+                        tagdata["data"]
+
+                        $.each(tagdata["data"], function(i) {
+                            try {
+                                var div = document.createElement('span');
+                                div.setAttribute('class', 'badge badge-light cattags');
+                                div.innerHTML = tagdata["data"][i].attributes.title;
+                                document.getElementById("tagcontainer" + currentresult).appendChild(div);
+                            } catch (error) {
+
+                            }
+                        });
+                    }
+                }
+
+                addtheresults('#' + "card" + currentresult);
+
+                if (count == data["data"].length) {
+                    beginShow();
+                }
             });
         } else {
             resetList();
@@ -248,4 +312,5 @@ function querySearch(){
         stopLoad();
         searching = false
     }
+    
 }
