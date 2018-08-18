@@ -1,5 +1,8 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import os
+import json
+
+from indexers import kitsu
 
 class rhandler(BaseHTTPRequestHandler):
 
@@ -13,6 +16,7 @@ class rhandler(BaseHTTPRequestHandler):
             "":  self._index,
             "index.html":  self._index,
             "static": self._serve_static,
+            "search": self._search,
         }
         func = command.get(self.path.split('/')[1], self._404)
         func(self.path.split('/')[2:])
@@ -49,6 +53,12 @@ class rhandler(BaseHTTPRequestHandler):
         else:
             self._404(file_path)
 
+    def _search(self, search):
+        self._set_headers(header={'keyword':'Content-type', 'value': 'application/json'})
+        indexer = kitsu.KitsuIndexer()
+        js = json.dumps(indexer.search(text_string=search))
+        self.wfile.write(js.encode())
+        
 
 
 
