@@ -2,6 +2,7 @@
 
 class BaseIndexer:
     user_agent = 'ComicGet Generic'
+    indexer_id = 'BASE'
 
     def __init__(self, user_agent = None):
         if (user_agent != None):
