@@ -42,6 +42,7 @@ class rhandler(BaseHTTPRequestHandler):
 
     def _serve_file_or_404(self, file_path):
         content_header = {
+            ".html": "text/html",
             ".css": "text/css",
             ".js": "javascript",
         }

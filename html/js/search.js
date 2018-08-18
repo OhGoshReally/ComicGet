@@ -2,7 +2,7 @@ function querySearch(){
 
     function cardtoggle (cont) { $(cont).toggle(250); }
     var entry = document.getElementById('myInput').value
-    var url = 'https://kitsu.io/api/edge/manga?filter[text]='
+    var url = 'search/'
     var kitsuurl = 'https://kitsu.io/manga/'
     var queryurl = encodeURI(url + entry);
     var results = ''
