@@ -166,6 +166,22 @@ body {
 #realheader {
   box-shadow: inset 0 -20px 30px -13px rgba(0, 0, 0, 0.05);
   margin: 0px;
+  z-index: 1;
+  position: relative;
+}
+
+#realheader::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .05;
+  z-index: -1;
+  background: url(/static/images/banner.jpg);
+  background-position: 0px -210px;
+  background-repeat: no-repeat;
 }
 
 .cattags {
@@ -273,8 +289,9 @@ body {
 #separator {
   background-color: #7c7c7c00;
   height: 1px;
-  width: 30%;
+  width: 20%;
   box-shadow: 0px -4px 20px 0px #000000;
+  z-index: -1;
 }
 
 #entiresearchbox {
@@ -306,4 +323,12 @@ body {
 
 .chapter-titles {
   font-weight: bold;
+}
+
+#menudiv {
+  background-color: #f7f7f7;
+}
+
+#menuoptions {
+  /*text-shadow: 0px 1px white;*/
 }
