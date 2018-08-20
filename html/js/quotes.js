@@ -4,5 +4,6 @@ var quotes = [
     'They don\'t think it be like it is but it do.',
     'OwO What\'s this?',
     'Why haven\'t you made your game yet?',
-    'Whomst tf discovered gravity'
+    'Whomst tf discovered gravity',
+    'It Really Do Be Like That Sometimes'
 ]

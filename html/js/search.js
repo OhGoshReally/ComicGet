@@ -1,16 +1,12 @@
 function querySearch(){
-
-    function cardtoggle (cont) { $(cont).toggle(250); }
+    
     var entry = document.getElementById('myInput').value
     var url = 'search/'
-    var kitsuurl = 'https://kitsu.io/manga/'
     var queryurl = encodeURI(url + entry);
     var results = ''
     var string
     var allcards = [];
     var count
-
-    //console.log(queryurl);
 
     function addtheresults(thediv){
         allcards.push(thediv);
@@ -35,8 +31,10 @@ function querySearch(){
 
     function callbackFuncWithData(data){
 
-        if (data["data"].length > 0) {
-            results = "<h5>Found <span id=\"resultnumber\">" + data["data"].length + "</span> results.</h5>"
+        console.log(data.data);
+
+        if (data.data.length > 0) {
+            results = "<h5>Found <span id=\"resultnumber\">" + data.data.length + "</span> results.</h5>"
             
             if (document.getElementById("resultbar").childNodes.length > 0) {
                 var myNode = document.getElementById("resultbar");
@@ -54,7 +52,7 @@ function querySearch(){
 
             count = 0
     
-            $.each(data["data"], function(i) {
+            $.each(data.data, function(i) {
 
                 count++
 
@@ -154,7 +152,7 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-2');
                 div.setAttribute('id', "bottomcol24" + currentresult);
-                div.innerHTML = '<button onclick="window.open(\u0027' + kitsuurl + "Slugwasherebutiremovedit:)" + '\u0027)" type="button" class="btn btn-primary hiddenbuts">Info <i class="far fa-question-circle"></i></button>';
+                div.innerHTML = '<button onclick="window.open(\u0027' + data.data[i].external_link + '\u0027)" type="button" class="btn btn-primary hiddenbuts">Info <i class="far fa-question-circle"></i></button>';
                 document.getElementById("bottomrow2" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
@@ -162,7 +160,7 @@ function querySearch(){
                 div.setAttribute('id', "bottomcol25" + currentresult);
 
                 try {
-                    string = ' (' + (((data["data"][i].startDate).slice(0, 4))) + ')'
+                    string = ' (' + (((data.data[i].start_date).slice(0, 4))) + ')'
                 }
                 catch(error) {
                     string = " "
@@ -170,7 +168,7 @@ function querySearch(){
                 
                 string
 
-                div.innerHTML = '<button type="button" class="btn btn-success hiddenbuts" onclick=\u0027addcomic("' + data["data"][i].title + string + '", "' + 'firstcontainer' + currentresult + '", "' + data["data"][i].id + '")\u0027>Add <i class="far fa-arrow-alt-circle-down"></i></button>';
+                div.innerHTML = '<button type="button" class="btn btn-success hiddenbuts" onclick=\u0027addcomic("' + data.data[i].title + string + '", "' + 'firstcontainer' + currentresult + '", "' + data.data[i].id + '")\u0027>Add <i class="far fa-arrow-alt-circle-down"></i></button>';
                 document.getElementById("bottomrow2" + currentresult).appendChild(div);
 
                 $('#innercontainer2' + currentresult).hide();
@@ -185,7 +183,7 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-2');
                 div.setAttribute('id', "cardcol1" + currentresult);
-                div.innerHTML = '<img class="card-img-top" src="' + data["data"][i].poster.small + '" alt="Card image' + currentresult + 'cap" style="width: 180px; height: 100%; width: 115%;">';
+                div.innerHTML = '<img class="card-img-top" src="' + data.data[i].poster.small + '" alt="Card image' + currentresult + 'cap" style="width: 180px; height: 100%; width: 115%;">';
                 document.getElementById("cardrow" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
@@ -226,14 +224,12 @@ function querySearch(){
 
                 //////////////////
 
-
-                //var tagurl = data["data"][i].relationships.categories.links.related
-                var published = data["data"][i].start_date
-                var ongoing = data["data"][i].status
-                var serialization = data["data"][i].serialization
-                var str = '<h5 class="comic-titles"><span id="card' + currentresult + 'name">' + data["data"][i].title
-                var syno = data["data"][i].synopsis
-                var rating = data["data"][i].average_rating
+                var published = data.data[i].start_date
+                var ongoing = data.data[i].status
+                var serialization = data.data[i].serialization
+                var str = '<h5 class="comic-titles"><span id="card' + currentresult + 'name">' + data.data[i].title
+                var syno = data.data[i].synopsis
+                var rating = data.data[i].average_rating
 
                 if (syno.length > 700) {
                     syno = syno.slice(0, 700);
@@ -264,46 +260,39 @@ function querySearch(){
                 }
 
                 str = str + '</h5>'
-                /*
-                var chaptersurl = data["data"][i].relationships.chapters.links.self
-
-                /*
-                $.getJSON(chaptersurl, getChapters);
-                function getChapters(chapters){
-                    str = str + '<h6 class="chapter-titles">' + chapters["data"].length + ' Chapters</h6>'
                 
+                //////////////////
 
-                    if (syno !== null) {
-                        str = str + '<p class="prevsyn" style="margin: 0;">' + syno + "</p>"
+                str = str + '<h6 class="chapter-titles">' + data.data[i].chapter_count + ' Chapters</h6>'
+            
+                if (syno !== null) {
+                    str = str + '<p class="prevsyn" style="margin: 0;">' + syno + "</p>"
+                }
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'container');
+                div.setAttribute('id', "result" + currentresult);
+                div.innerHTML = str;
+                document.getElementById("cardbody" + currentresult).appendChild(div);
+
+                var tagcount = Object.keys(data.data[i].tags).length
+
+                var x
+                for (x = 0; x < tagcount; x++) {
+                    try {
+                        var div = document.createElement('span');
+                        div.setAttribute('class', 'badge badge-light cattags');
+                        div.innerHTML = data.data[i].tags[x];
+                        document.getElementById("tagcontainer" + currentresult).appendChild(div);
+                    } catch (error) {
                     }
+                }
 
-                    var div = document.createElement('div');
-                    div.setAttribute('class', 'container');
-                    div.setAttribute('id', "result" + currentresult);
-                    div.innerHTML = str;
-                    document.getElementById("cardbody" + currentresult).appendChild(div);
-
-                    /*
-                    $.getJSON(tagurl, callbackFuncWithData);
-                    function callbackFuncWithData(tagdata){
-                        tagdata["data"]
-
-                        $.each(tagdata["data"], function(i) {
-                            try {
-                                var div = document.createElement('span');
-                                div.setAttribute('class', 'badge badge-light cattags');
-                                div.innerHTML = tagdata["data"][i].attributes.title;
-                                document.getElementById("tagcontainer" + currentresult).appendChild(div);
-                            } catch (error) {
-
-                            }
-                        });
-                    }
-                }*/
+                ///////////////////////
 
                 addtheresults('#' + "card" + currentresult);
 
-                if (count == data["data"].length) {
+                if (count == data.data.length) {
                     beginShow();
                 }
             });

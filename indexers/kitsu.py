@@ -39,9 +39,11 @@ class KitsuIndexer(BaseIndexer):
         response['data'] = []
 
         for result in j['data']:
+            external_link = 'https://kitsu.io/manga/'
             attributes = result['attributes']
             posters = attributes['posterImage']
             covers = attributes['coverImage']
+            slug = attributes['slug']
             manga = {
                 'id': result['id'],
                 'type': result['type'],
@@ -64,6 +66,17 @@ class KitsuIndexer(BaseIndexer):
 
             manga['poster'] = poster
 
+            tagurl = result['relationships']['categories']['links']['related']
+            tagres = requests.get(tagurl)
+            tagjso = tagres.json()
+            tags = {}
+            tagnmb = 0
+            for tag in tagjso['data']:
+                tags[tagnmb] = tag['attributes']['title']
+                tagnmb += 1
+
+            manga['tags'] = tags
+
             cover = {}
             if covers != None:
                 for size in sizes:
@@ -72,8 +85,10 @@ class KitsuIndexer(BaseIndexer):
 
             manga['cover'] = cover
 
-            self.cache_imgs(manga['id'], 'poster', poster)
-            self.cache_imgs(manga['id'], 'cover', cover)
+            manga['external_link'] = external_link + slug
+
+            #self.cache_imgs(manga['id'], 'poster', poster)
+            #self.cache_imgs(manga['id'], 'cover', cover)
 
             response['data'].append(manga)
 
