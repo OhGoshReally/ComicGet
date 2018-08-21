@@ -1,5 +1,5 @@
 function querySearch(){
-    
+
     var entry = document.getElementById('myInput').value
     var url = 'search/'
     var queryurl = encodeURI(url + entry);
@@ -31,7 +31,8 @@ function querySearch(){
 
     function callbackFuncWithData(data){
 
-        console.log(data.data);
+        console.log(data);
+        console.log(data.indexer_id);
 
         if (data.data.length > 0) {
             results = "<h5>Found <span id=\"resultnumber\">" + data.data.length + "</span> results.</h5>"
@@ -197,37 +198,110 @@ function querySearch(){
                 document.getElementById("cardcol2" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
+                div.setAttribute('class', 'card-body');
+                div.setAttribute('style', 'padding-bottom: 0px;');
+                div.setAttribute('id', "innercardbody" + currentresult);
+                document.getElementById("innerrow1" + currentresult).appendChild(div);
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'container');
+                div.setAttribute('id', "innercontainer3" + currentresult);
+                document.getElementById("innercardbody" + currentresult).appendChild(div);
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'row');
+                div.setAttribute('id', "innerrow4" + currentresult);
+                document.getElementById("innercontainer3" + currentresult).appendChild(div);
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'row');
+                div.setAttribute('id', "innerrow5" + currentresult);
+                document.getElementById("innercontainer3" + currentresult).appendChild(div);
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'container');
+                div.setAttribute('id', "innercontainer4" + currentresult);
+                document.getElementById("innerrow5" + currentresult).appendChild(div);
+
+                ///////////////////
+
+                var div = document.createElement('h6');
+                div.setAttribute('class', 'chapter-titles');
+                div.innerHTML = data.data[i].chapter_count + " Chapters";
+                document.getElementById("innercontainer4" + currentresult).appendChild(div);
+
+                ///////////////////
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'col');
+                div.setAttribute('id', "innercol3" + currentresult);
+                document.getElementById("innerrow4" + currentresult).appendChild(div);
+
+                var div = document.createElement('h5');
+                div.setAttribute('class', 'comic-titles');
+                div.setAttribute('id', "comictitle" + currentresult);
+                document.getElementById("innercol3" + currentresult).appendChild(div);
+
+                ///////////
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'col-2');
+                div.setAttribute('style', 'text-align: right;');
+                div.setAttribute('id', "innercol4" + currentresult);
+                document.getElementById("innerrow4" + currentresult).appendChild(div);
+
+                var div = document.createElement('h5');
+                div.setAttribute('style', 'color: #b485d0; font-weight: bold;');
+                div.innerHTML = data.indexer_id;
+                document.getElementById("innercol4" + currentresult).appendChild(div);
+
+                ///////////////////
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'row');
+                div.setAttribute('id', "innerrow2" + currentresult);
+                document.getElementById("cardcol2" + currentresult).appendChild(div);
+
+                var div = document.createElement('div');
                 div.setAttribute('class', 'row');
                 div.setAttribute('style', 'position: absolute; bottom: 0px;');
-                div.setAttribute('id', "innerrow2" + currentresult);
+                div.setAttribute('id', "innerrow3" + currentresult);
                 document.getElementById("cardcol2" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'card-body');
                 div.setAttribute('id', "tagcard" + currentresult);
-                document.getElementById("innerrow2" + currentresult).appendChild(div);
+                document.getElementById("innerrow3" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'container');
                 div.setAttribute('id', "tagcontainer" + currentresult);
                 document.getElementById("tagcard" + currentresult).appendChild(div);
 
+                ///////////////
+
                 var div = document.createElement('div');
-                div.setAttribute('class', 'card-body');
-                div.setAttribute('id', "cardbody" + currentresult);
-                document.getElementById("innerrow1" + currentresult).appendChild(div);
+                div.setAttribute('class', 'col');
+                div.setAttribute('id', "innercol5" + currentresult);
+                document.getElementById("innerrow2" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-1');
-                div.setAttribute('id', "cardcol3" + currentresult);
-                document.getElementById("cardrow" + currentresult).appendChild(div);
+                div.setAttribute('id', "innercol6" + currentresult);
+                document.getElementById("innerrow2" + currentresult).appendChild(div);
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'card-body');
+                div.setAttribute('style', 'padding-top: 0px; padding-bottom: 0px;');
+                div.setAttribute('id', "innercardbody2" + currentresult);
+                document.getElementById("innercol5" + currentresult).appendChild(div);
 
                 //////////////////
 
                 var published = data.data[i].start_date
                 var ongoing = data.data[i].status
                 var serialization = data.data[i].serialization
-                var str = '<h5 class="comic-titles"><span id="card' + currentresult + 'name">' + data.data[i].title
+                var str = data.data[i].title
                 var syno = data.data[i].synopsis
                 var rating = data.data[i].average_rating
 
@@ -258,22 +332,19 @@ function querySearch(){
                     rating = rating.slice(0,1) + "." + rating.slice(1,2)
                     str = str + ' <span class="badge badge-warning toptag">' + rating + '</span>'
                 }
-
-                str = str + '</h5>'
                 
                 //////////////////
 
-                str = str + '<h6 class="chapter-titles">' + data.data[i].chapter_count + ' Chapters</h6>'
-            
-                if (syno !== null) {
-                    str = str + '<p class="prevsyn" style="margin: 0;">' + syno + "</p>"
-                }
+                var div = document.createElement('p');
+                div.setAttribute('class', 'prevsyn');
+                div.setAttribute('style', 'margin: 0;');
+                div.innerHTML = syno;
+                document.getElementById("innercardbody2" + currentresult).appendChild(div);
 
-                var div = document.createElement('div');
-                div.setAttribute('class', 'container');
-                div.setAttribute('id', "result" + currentresult);
+                var div = document.createElement('span');
+                div.setAttribute('id', "thetitle" + currentresult);
                 div.innerHTML = str;
-                document.getElementById("cardbody" + currentresult).appendChild(div);
+                document.getElementById("comictitle" + currentresult).appendChild(div);
 
                 var tagcount = Object.keys(data.data[i].tags).length
 
