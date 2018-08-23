@@ -1,5 +1,4 @@
 body {
-  /*background-color: blue;*/
     font-family: 'Raleway', sans-serif;
     background-color: #f7f7f7;
     overflow: overlay;
@@ -186,12 +185,6 @@ body {
   background-repeat: no-repeat;
 }
 
-.cattags {
-/*  font-size: .7rem;
-  margin-right: 13px;
-  font-weight: bold;*/
-}
-
 .addbtn {
   position: absolute;
   bottom: 10px;
@@ -330,10 +323,6 @@ body {
 
 #menudiv {
   background-color: #f7f7f7;
-}
-
-#menuoptions {
-  /*text-shadow: 0px 1px white;*/
 }
 
 #header-gradient {

@@ -8,8 +8,15 @@ function querySearch(){
     var allcards = [];
     var count
 
+    $('body').off('DOMNodeInserted');
     $('body').on('DOMNodeInserted',function(e){
         var target = e.target;
+        var t = target
+        var listener
+
+        clearTimeout(listener)
+        listener = setTimeout(function(){ $('body').off('DOMNodeInserted'); }, 6000);
+
         if (target.className == "prevsyn") {
             if ($(target)[0].scrollHeight > $(target).innerHeight()) {
                 var div = document.createElement('i');
@@ -17,6 +24,73 @@ function querySearch(){
                 div.setAttribute('onClick', 'readMore(this);');
                 div.innerHTML = '<div class="readmorefade"></div>';
                 document.getElementById(target.parentNode.id).appendChild(div);
+            }
+        } else if (target.className == "comic-id") {
+            var tagurl = 'https://kitsu.io/api/edge/manga/'
+            var tagend = '/categories'
+
+            var fulltagurl = tagurl + target.innerText + tagend
+
+            $.getJSON(fulltagurl, callbackFuncWithData);
+            function callbackFuncWithData(data){
+
+                function inserttags() {
+                    
+                    var tagcont = a.getElementsByClassName("tagcontainer")[0]
+
+                    var x
+                    for (x = 0; x < data.data.length; x++) {
+                        try {
+                            if (x > 0) {
+                                var div = document.createElement('span');
+                                div.setAttribute('class', 'tagcomma');
+                                div.innerHTML = ",";
+                                document.getElementById(tagcont.id).appendChild(div);
+
+                                var div = document.createElement('span');
+                                div.setAttribute('class', 'cattags');
+                                div.innerHTML = data.data[x].attributes.title;
+                                document.getElementById(tagcont.id).appendChild(div);
+                            } else {
+                                var div = document.createElement('span');
+                                div.setAttribute('class', 'cattags');
+                                div.innerHTML = data.data[x].attributes.title;
+                                document.getElementById(tagcont.id).appendChild(div);
+                            }
+                        } catch (error) {
+                        }
+                    }
+
+                    if (a.getElementsByClassName("chapter-titles")[0].innerText == "null Chapters") {
+                        var b = a
+                        var chapurl = 'https://kitsu.io/api/edge/manga/'
+                        var chapend = '/relationships/chapters'
+
+                        function getChapters() {
+                            var fullchapurl = chapurl + b.getElementsByClassName("comic-id")[0].innerText + chapend
+                            $.getJSON(fullchapurl, callbackFuncWithData);
+                            function callbackFuncWithData(data){
+                                var chapnmb = data.data.length
+                                b.getElementsByClassName("chapter-titles")[0].innerText = chapnmb + " Chapters";
+                            }
+                        }
+                        getChapters();
+                    }
+                }
+
+                function findrootdiv(t) {
+                    function iterate(t){
+                        t = t.parentElement
+                        if (t.className.includes("resultcards")) {
+                            a = t
+                            inserttags()
+                        } else {
+                            iterate(t)
+                        }
+                    }
+                    iterate(t)
+                }
+                findrootdiv(t)
             }
         }
     });
@@ -185,7 +259,7 @@ function querySearch(){
                 //////////////////////////////
 
                 var div = document.createElement('div');
-                div.setAttribute('class', 'row');
+                div.setAttribute('class', 'row cardrow');
                 div.setAttribute('id', "cardrow" + currentresult);
                 document.getElementById("innercontainer1" + currentresult).appendChild(div);
 
@@ -265,7 +339,7 @@ function querySearch(){
                 document.getElementById("innerrow4" + currentresult).appendChild(div);
 
                 var div = document.createElement('h5');
-                div.setAttribute('class', 'indexer');
+                div.setAttribute('class', 'indexer d-none d-lg-block');
                 div.innerHTML = data.indexer_id;
                 document.getElementById("innercol4" + currentresult).appendChild(div);
 
@@ -325,24 +399,22 @@ function querySearch(){
                     str = str + ' (' + published + ')'
                 }
 
-                if (serialization !== null) {
-                    str = str + '  <span class="badge badge-secondary toptag">' + serialization + '</span>'
+                if (serialization !== null && serialization !== "") {
+                    str = str + '  <span class="badge badge-secondary toptag d-none d-md-inline">' + serialization + '</span>'
                 }
 
                 if (ongoing !== null) {
                     if (ongoing == "finished") {
-                        str = str + ' <span class="badge badge-danger toptag">Ended</span>'
+                        str = str + ' <span class="badge badge-danger toptag d-none d-sm-inline">Ended</span>'
                     } else {
-                        str = str + '  <span class="badge badge-success toptag">Ongoing</span>'
+                        str = str + '  <span class="badge badge-success toptag d-none d-sm-inline">Ongoing</span>'
                     }
                 }
 
                 if (rating !== null) {
                     rating = rating.slice(0,1) + "." + rating.slice(1,2)
-                    str = str + ' <span class="badge badge-warning toptag">' + rating + '</span>'
+                    str = str + ' <span class="badge badge-warning toptag d-none d-lg-inline">' + rating + '</span>'
                 }
-
-                str = str + '<span class="comic-id">' + data.data[i].id + '</span>'
                 
                 //////////////////
 
@@ -358,40 +430,10 @@ function querySearch(){
                 div.innerHTML = str;
                 document.getElementById("comictitle" + currentresult).appendChild(div);
 
-                var tagcount = Object.keys(data.data[i].tags).length
-
-                var x
-                for (x = 0; x < tagcount; x++) {
-                    try {
-                        if (x > 0) {
-                            var div = document.createElement('span');
-                            div.setAttribute('class', 'tagcomma');
-                            div.innerHTML = ",";
-                            document.getElementById("tagcontainer" + currentresult).appendChild(div);
-
-                            var div = document.createElement('span');
-                            div.setAttribute('class', 'cattags');
-                            div.innerHTML = data.data[i].tags[x];
-                            document.getElementById("tagcontainer" + currentresult).appendChild(div);
-                        } else {
-                            var div = document.createElement('span');
-                            div.setAttribute('class', 'cattags');
-                            div.innerHTML = data.data[i].tags[x];
-                            document.getElementById("tagcontainer" + currentresult).appendChild(div);
-                        }
-                    } catch (error) {
-                    }
-                }
-
-                //console.log($("#prevsyn" + currentresult)[0].scrollWidth);
-                //console.log($("#prevsyn" + currentresult).innerWidth());
-
-                //if ($("#prevsyn" + currentresult)[0].scrollWidth >  $("#prevsyn" + currentresult).innerWidth()) {
-                //    document.getElementById("#card" + currentresult).style.backgroundColor = "red"
-                //    $("#card" + currentresult).hide(0, function(){
-                //        document.getElementById("card" + currentresult).style.visibility = "";
-                //    });
-                //}
+                var div = document.createElement('span');
+                div.setAttribute('class', "comic-id");
+                div.innerHTML = data.data[i].id;
+                document.getElementById("thetitle" + currentresult).appendChild(div);
 
                 ///////////////////////
 

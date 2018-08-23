@@ -5,5 +5,6 @@ var quotes = [
     'OwO What\'s this?',
     'Why haven\'t you made your game yet?',
     'Whomst tf discovered gravity',
-    'It Really Do Be Like That Sometimes'
+    'It Really Do Be Like That Sometimes',
+    'Consequences will never be the same'
 ]

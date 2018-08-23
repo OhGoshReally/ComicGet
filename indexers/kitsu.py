@@ -44,7 +44,7 @@ class KitsuIndexer(BaseIndexer):
             posters = attributes['posterImage']
             covers = attributes['coverImage']
             slug = attributes['slug']
-            chapter_count = attributes['chapterCount']
+            #chapter_count = attributes['chapterCount']
             manga = {
                 'id': result['id'],
                 'type': result['type'],
@@ -53,7 +53,7 @@ class KitsuIndexer(BaseIndexer):
                 'start_date': attributes['startDate'],
                 'end_date': attributes['endDate'],
                 'status': attributes['status'],
-                #'chapter_count': attributes['chapterCount'],
+                'chapter_count': attributes['chapterCount'],
                 'volume_count': attributes['volumeCount'],
                 'serialization': attributes['serialization'],
                 'average_rating': attributes['averageRating']
@@ -67,24 +67,24 @@ class KitsuIndexer(BaseIndexer):
 
             manga['poster'] = poster
 
-            tagurl = result['relationships']['categories']['links']['related']
-            tagres = requests.get(tagurl)
-            tagjso = tagres.json()
-            tags = {}
-            tagnmb = 0
-            for tag in tagjso['data']:
-                tags[tagnmb] = tag['attributes']['title']
-                tagnmb += 1
+            #tagurl = result['relationships']['categories']['links']['related']
+            #tagres = requests.get(tagurl)
+            #tagjso = tagres.json()
+            #tags = {}
+            #tagnmb = 0
+            #for tag in tagjso['data']:
+            #    tags[tagnmb] = tag['attributes']['title']
+            #    tagnmb += 1
 
-            manga['tags'] = tags
+            #manga['tags'] = tags
 
-            if (chapter_count is None):
-                chaurl = result['relationships']['chapters']['links']['self']
-                chares = requests.get(chaurl)
-                chajso = chares.json()
-                chapter_count = len(chajso['data'])
+            #if (chapter_count is None):
+            #    chaurl = result['relationships']['chapters']['links']['self']
+            #    chares = requests.get(chaurl)
+            #    chajso = chares.json()
+            #    chapter_count = len(chajso['data'])
 
-            manga['chapter_count'] = chapter_count
+            #manga['chapter_count'] = chapter_count
 
             cover = {}
             if covers != None:
