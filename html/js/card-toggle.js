@@ -1,5 +1,7 @@
 function cardtoggleon (cont) {
 
+    cont = cont.firstChild.childNodes[1].id
+
     var getcards = document.getElementsByClassName("addon-card");
     var getcards = Array.prototype.slice.call(getcards);
     var showthisdiv = getcards.filter(word => word.id == cont)
@@ -20,6 +22,8 @@ function cardtoggleon (cont) {
 }
 
 function cardtoggleoff (cont) {
+
+    cont = cont.firstChild.childNodes[1].id
 
     var getcards = document.getElementsByClassName("addon-card");
     var getcards = Array.prototype.slice.call(getcards);

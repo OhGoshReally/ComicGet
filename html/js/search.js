@@ -35,31 +35,49 @@ function querySearch(){
             function callbackFuncWithData(data){
 
                 function inserttags() {
-                    
                     var tagcont = a.getElementsByClassName("tagcontainer")[0]
+                    function addtags(c) {
+                        var d = c.getElementsByClassName("tagcontainer")[0]
+                        var x
+                        for (x = 0; x < data.data.length; x++) {
+                            try {
+                                if (x > 0) {
+                                    var div = document.createElement('span');
+                                    div.setAttribute('class', 'tagcomma');
+                                    div.setAttribute('style', 'opacity: 0');
+                                    div.innerHTML = ",";
+                                    d.appendChild(div);
 
-                    var x
-                    for (x = 0; x < data.data.length; x++) {
-                        try {
-                            if (x > 0) {
-                                var div = document.createElement('span');
-                                div.setAttribute('class', 'tagcomma');
-                                div.innerHTML = ",";
-                                document.getElementById(tagcont.id).appendChild(div);
-
-                                var div = document.createElement('span');
-                                div.setAttribute('class', 'cattags');
-                                div.innerHTML = data.data[x].attributes.title;
-                                document.getElementById(tagcont.id).appendChild(div);
-                            } else {
-                                var div = document.createElement('span');
-                                div.setAttribute('class', 'cattags');
-                                div.innerHTML = data.data[x].attributes.title;
-                                document.getElementById(tagcont.id).appendChild(div);
+                                    var div = document.createElement('span');
+                                    div.setAttribute('class', 'cattags');
+                                    div.setAttribute('style', 'opacity: 0');
+                                    div.innerHTML = data.data[x].attributes.title;
+                                    d.appendChild(div);
+                                } else {
+                                    var div = document.createElement('span');
+                                    div.setAttribute('class', 'cattags');
+                                    div.setAttribute('style', 'opacity: 0');
+                                    div.innerHTML = data.data[x].attributes.title;
+                                    d.appendChild(div);
+                                }
+                            } catch (error) {
                             }
-                        } catch (error) {
                         }
                     }
+
+                    function findtagroot(t) {
+                        function tagiterate(t){
+                            t = t.parentElement
+                            if (t.className.includes("resultcards")) {
+                                var b = t
+                                addtags(b)
+                            } else {
+                                tagiterate(t)
+                            }
+                        }
+                        tagiterate(t)
+                    }
+                    findtagroot(tagcont)
 
                     if (a.getElementsByClassName("chapter-titles")[0].innerText == "null Chapters") {
                         var b = a
@@ -92,6 +110,10 @@ function querySearch(){
                 }
                 findrootdiv(t)
             }
+        } else if (target.className == "cattags" || target.className == "tagcomma") {
+            $(target).fadeTo(250, 1, function(){
+                target.removeAttribute("style")
+            });
         }
     });
 
@@ -103,13 +125,16 @@ function querySearch(){
         var i = 0
         function slowlyAdd() {
             setTimeout(function(){
-                $(allcards[i]).fadeIn(250, function(){
+                $(allcards[i]).fadeTo(150, 1, function(){
+                    var cach = (allcards[i].slice(1, 20))
+                    cach = document.getElementById(cach)
+                    cach.removeAttribute("style")
                     i++
                     if (i < allcards.length) {
                         slowlyAdd();
                     }
                 });
-            }, 50);
+            }, 0);
         }
         slowlyAdd();
     }
@@ -145,16 +170,13 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'card resultcards');
                 div.setAttribute('id', "card" + currentresult);
-                div.setAttribute('style', 'visibility = "hidden";');
-                div.setAttribute('onmouseover', 'cardtoggleon("innercontainer2' + currentresult + '")');
-                div.setAttribute('onmouseleave', 'cardtoggleoff("innercontainer2' + currentresult + '")');
+                div.setAttribute('style', 'opacity: 0;');
+                div.setAttribute('onmouseover', 'cardtoggleon(this)');
+                div.setAttribute('onmouseleave', 'cardtoggleoff(this)');
                 document.getElementById('resultbar').appendChild(div);
 
-                //$('#' + "card" + currentresult).hide();
-
                 var div = document.createElement('div');
-                div.setAttribute('class', 'container');
-                div.setAttribute('style', 'padding: 0');
+                div.setAttribute('class', 'container bigcontainer');
                 div.setAttribute('id', "firstcontainer" + currentresult);
                 document.getElementById("card" + currentresult).appendChild(div);
 
@@ -264,8 +286,7 @@ function querySearch(){
                 document.getElementById("innercontainer1" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
-                div.setAttribute('class', 'col-2');
-                div.setAttribute('style', 'padding: 0px;');
+                div.setAttribute('class', 'col-2 imgdiv');
                 div.setAttribute('id', "cardcol1" + currentresult);
                 div.innerHTML = '<img class="card-img-top" src="' + data.data[i].poster.small + '" alt="Card image' + currentresult + 'cap">';
                 document.getElementById("cardrow" + currentresult).appendChild(div);
@@ -286,8 +307,7 @@ function querySearch(){
                 document.getElementById("innercolumns" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
-                div.setAttribute('class', 'card-body');
-                div.setAttribute('style', 'padding-bottom: 0px;');
+                div.setAttribute('class', 'card-body titlecard');
                 div.setAttribute('id', "innercardbody" + currentresult);
                 document.getElementById("innerrow1" + currentresult).appendChild(div);
 
@@ -333,8 +353,7 @@ function querySearch(){
                 ///////////
 
                 var div = document.createElement('div');
-                div.setAttribute('class', 'col-2');
-                div.setAttribute('style', 'text-align: right;');
+                div.setAttribute('class', 'col-2 indexertab');
                 div.setAttribute('id', "innercol4" + currentresult);
                 document.getElementById("innerrow4" + currentresult).appendChild(div);
 
@@ -378,8 +397,7 @@ function querySearch(){
                 document.getElementById("innerrow2" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');
-                div.setAttribute('class', 'card-body');
-                div.setAttribute('style', 'padding-top: 0px; padding-bottom: 0px;');
+                div.setAttribute('class', 'card-body syncard');
                 div.setAttribute('id', "innercardbody2" + currentresult);
                 document.getElementById("innercol5" + currentresult).appendChild(div);
 
@@ -392,12 +410,14 @@ function querySearch(){
                 var syno = data.data[i].synopsis
                 var rating = data.data[i].average_rating
 
-                str = '<span class="title">' + str + '</span>'
+                str = '<span class="title">' + str
 
                 if (published !== null) {
                     published = published.slice(0, 4);
                     str = str + ' (' + published + ')'
                 }
+
+                str = str + '</span>'
 
                 if (serialization !== null && serialization !== "") {
                     str = str + '  <span class="badge badge-secondary toptag d-none d-md-inline">' + serialization + '</span>'
@@ -420,7 +440,6 @@ function querySearch(){
 
                 var div = document.createElement('p');
                 div.setAttribute('class', 'prevsyn');
-                div.setAttribute('style', 'margin: 0;');
                 div.setAttribute('id', "prevsyn" + currentresult);
                 div.innerHTML = syno;
                 document.getElementById("innercardbody2" + currentresult).appendChild(div);
@@ -434,6 +453,33 @@ function querySearch(){
                 div.setAttribute('class', "comic-id");
                 div.innerHTML = data.data[i].id;
                 document.getElementById("thetitle" + currentresult).appendChild(div);
+
+                ///////////////////////
+                
+                (document.getElementById("innercontainer4" + currentresult)).removeAttribute("id");
+                (document.getElementById("innerrow5" + currentresult)).removeAttribute("id");
+                (document.getElementById("innerrow4" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercontainer3" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercardbody" + currentresult)).removeAttribute("id");
+                (document.getElementById("innerrow1" + currentresult)).removeAttribute("id");
+                (document.getElementById("prevsyn" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercardbody2" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercol5" + currentresult)).removeAttribute("id");
+                (document.getElementById("innerrow2" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercol6" + currentresult)).removeAttribute("id");
+                (document.getElementById("tagcontainer" + currentresult)).removeAttribute("id");
+                (document.getElementById("tagcard" + currentresult)).removeAttribute("id");
+                (document.getElementById("innerrow3" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercolumns" + currentresult)).removeAttribute("id");
+                (document.getElementById("cardcol2" + currentresult)).removeAttribute("id");
+                (document.getElementById("cardcol1" + currentresult)).removeAttribute("id");
+                (document.getElementById("cardrow" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercol4" + currentresult)).removeAttribute("id");
+                (document.getElementById("comictitle" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercol3" + currentresult)).removeAttribute("id");
+                (document.getElementById("thetitle" + currentresult)).removeAttribute("id");
+                (document.getElementById("innercontainer1" + currentresult)).removeAttribute("id");
+                (document.getElementById("firstcontainer" + currentresult)).removeAttribute("id");
 
                 ///////////////////////
 

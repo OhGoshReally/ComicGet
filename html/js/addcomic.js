@@ -4,15 +4,13 @@ function addcomic(q) {
     var d
     var f
 
-    function switchadd(s, d, f) {
+    function switchadd(a, f) {
 
-        var parentdiv = document.getElementById(d);
-        var rootdiv = document.getElementById(d).parentNode.id
         var div = document.createElement('div');
         div.setAttribute('class', 'card-body');
         div.setAttribute('id', "addedcard" + f);
         div.setAttribute('style', "text-align: center; color: #57b86c;");
-        document.getElementById(rootdiv).appendChild(div);
+        a.appendChild(div);
 
         var div = document.createElement('div');
         div.setAttribute('class', 'card-body');
@@ -33,16 +31,15 @@ function addcomic(q) {
         
         var div = document.createElement('h3');
         div.setAttribute('style', "font-weight: bold");
-        div.innerHTML = 'Added ' + s + ' to library';
+        div.innerHTML = 'Added ' + (a.getElementsByClassName("title")[0].innerText).toString() + ' to library';
         document.getElementById("addedinnercard2" + f).appendChild(div);
 
         $("addedcard" + f).hide();
-        $(parentdiv).hide(200, function(){
+        $(a.firstChild).hide(200, function(){
             $("addedcard" + f).show(200);
             waitremove = setTimeout(function(){
-                $('#' + rootdiv).hide(200, function(){
-                    var element = document.getElementById(rootdiv);
-                    element.remove(element);
+                $(a).hide(200, function(){
+                    a.remove(a);
                     (document.getElementById("resultnumber").innerText)--
                     if ((document.getElementById("resultnumber").innerText) == 0) {
                         var element = document.getElementById("resultnumber").parentNode.parentNode
@@ -55,14 +52,9 @@ function addcomic(q) {
         });
     }
 
-    function findparentcontainer(a) {
-        d = a.firstChild.id
-        switchadd(s, d, f);
-    }
-
     function findid(a) {
         f = a.getElementsByClassName("comic-id")[0].innerText
-        findparentcontainer(a)
+        switchadd(a, f)
     }
 
     function findtitle(a) {
@@ -74,7 +66,6 @@ function addcomic(q) {
         function iterate(q){
             q = q.parentElement
             if (q.className.includes("resultcards")) {
-                console.log(q);
                 a = q
                 findtitle(a)
             } else {

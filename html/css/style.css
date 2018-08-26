@@ -90,6 +90,7 @@ body {
 .prevsyn {
   font-size: 13px;
   max-height: 99px;
+  margin: 0;
   overflow: hidden;
 }
 
@@ -393,4 +394,29 @@ body {
 
 .comic-id {
   display: none;
+}
+
+.syncard {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.indexertab {
+  text-align: right;
+}
+
+.titlecard {
+  padding-bottom: 0px;
+}
+
+.imgdiv {
+  padding: 0px
+}
+
+.bigcontainer {
+  padding: 0
+}
+
+#resultbar {
+  width: 100%
 }
