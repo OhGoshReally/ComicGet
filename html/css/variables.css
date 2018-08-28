@@ -1,0 +1,14 @@
+body {
+    --main-bg-color: #f7f7f7;
+    --main-text-color: #464646;
+    --accent-color-1: #DBB1CD;
+    --accent-color-2: #D1B894;
+    --accent-color-3: #b485d0;
+    --accent-green: #5eea6a;
+    --accent-blue: #67b1ff;
+    /*--accent-blue: #86c1ff;*/
+    --accent-red: #ff676d;
+    --accent-green-dark: #77d880;
+    --accent-gray-light: #e8e8e8;
+    --accent-gray: #a3acb5;
+}
