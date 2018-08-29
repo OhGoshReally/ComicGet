@@ -1,11 +1,6 @@
 function showLibrary() {
     var listfile = "/static/library/list.json"
     var imgdir = "/static/library/img"
-    var got = 8
-    var need = 15
-    //document.getElementById("library-hj").style.width = ((got * 100 / need) + "%")
-
-    
 
     $('#library-entries').off('DOMNodeInserted');
     $('#library-entries').on('DOMNodeInserted',function(e){
@@ -57,10 +52,15 @@ function showLibrary() {
         }
     });
 
+    if (document.getElementById("library-entries").firstChild) {
+        var myNode = document.getElementById("library-entries");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.firstChild);
+        }
+    }
+
     $.getJSON(listfile, callbackFuncWithData);
     function callbackFuncWithData(data){
-        console.log(data);
-        //var entrycount = Object.keys(data).length;
 
         var i
         for (i in data) {
@@ -82,6 +82,7 @@ function showLibrary() {
             //div.setAttribute('style', 'opacity: 0;');
             div.setAttribute('onmouseover', 'cardHoverOn(this)');
             div.setAttribute('onmouseleave', 'cardHoverOff(this)');
+            div.setAttribute('onclick', 'removecomic(this)');
             document.getElementById('library-entries').appendChild(div);
             
             var div = document.createElement('div');
@@ -94,8 +95,17 @@ function showLibrary() {
             div.setAttribute('class', 'posteroverlay');
             div.setAttribute('style', 'opacity: 0;');
             div.setAttribute('id', "library-posteroverlay" + i);
-            div.innerHTML = data[i].title + published
             document.getElementById('library-poster' + i).appendChild(div);
+
+            var div = document.createElement('div');
+            div.setAttribute('class', 'posteroverlay-table');
+            div.setAttribute('id', "library-posteroverlay-table" + i);
+            document.getElementById('library-posteroverlay' + i).appendChild(div);
+
+            var div = document.createElement('div');
+            div.setAttribute('class', 'posteroverlay-text');
+            div.innerHTML = data[i].title + published
+            document.getElementById('library-posteroverlay-table' + i).appendChild(div);
 
             var div = document.createElement('img');
             div.setAttribute('class', 'card-img-top posterimg');
@@ -112,8 +122,17 @@ function showLibrary() {
             div.setAttribute('class', 'posteroverlay2');
             div.setAttribute('style', 'opacity: 0;');
             div.setAttribute('id', "library-posteroverlay2" + i);
-            div.innerHTML = data[i].title + published
             document.getElementById("library-firstcontainer" + i).appendChild(div);
+
+            var div = document.createElement('div');
+            div.setAttribute('class', 'posteroverlay-table');
+            div.setAttribute('id', "library-posteroverlay-table2" + i);
+            document.getElementById('library-posteroverlay2' + i).appendChild(div);
+
+            var div = document.createElement('div');
+            div.setAttribute('class', 'posteroverlay-text');
+            div.innerHTML = data[i].title + published
+            document.getElementById("library-posteroverlay-table2" + i).appendChild(div);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'container-fluid');
@@ -265,9 +284,9 @@ function showLibrary() {
 
             if (Number(data[i].monitored.got) < Number(data[i].monitored.want)) {
                 div.setAttribute('class', 'progress-fill progressbar-missing');
-            } else if (Number(data[i].monitored.got) == Number(data[i].monitored.want) && data[i].status == "Ended") {
+            } else if (Number(data[i].monitored.got) == Number(data[i].monitored.want) && data[i].status == "finished") {
                 div.setAttribute('class', 'progress-fill progressbar-complete');
-            } else if (Number(data[i].monitored.got) == Number(data[i].monitored.want) && data[i].status == "Ongoing") {
+            } else if (Number(data[i].monitored.got) == Number(data[i].monitored.want) && data[i].status == "current") {
                 div.setAttribute('class', 'progress-fill progressbar-ongoing');
             }
 
@@ -406,6 +425,8 @@ function showLibrary() {
             (document.getElementById("library-poster" + i)).removeAttribute("id");
             (document.getElementById("library-posterimg" + i)).removeAttribute("id");
             (document.getElementById("library-posteroverlay" + i)).removeAttribute("id");
+            (document.getElementById("library-posteroverlay-table" + i)).removeAttribute("id");
+            (document.getElementById("library-posteroverlay-table2" + i)).removeAttribute("id");
             
             ///////////////////////
 

@@ -3,6 +3,8 @@ import os
 import json
 
 from indexers import kitsu
+from web import postadd
+from web import postremove
 
 class rhandler(BaseHTTPRequestHandler):
 
@@ -17,6 +19,8 @@ class rhandler(BaseHTTPRequestHandler):
             "index.html":  self._index,
             "static": self._serve_static,
             "search": self._search,
+            "add": self._add,
+            "remove": self._remove,
         }
         func = command.get(self.path.split('/')[1], self._404)
         func(self.path.split('/')[2:])
@@ -64,7 +68,18 @@ class rhandler(BaseHTTPRequestHandler):
         indexer.get_cacher().set_cache(cache_dir)
         js = json.dumps(indexer.search(text_string=search))
         self.wfile.write(js.encode())
-        
+    
+    def _add(self, add):
+        self._set_headers(header={'keyword':'Content-type', 'value': 'text/html'})
+        addone = postadd.Add()
+        addone.addcomic(text_string=add)
+        self.wfile.write(b"<h2>NOICE</h2>")
+    
+    def _remove(self, remove):
+        self._set_headers(header={'keyword':'Content-type', 'value': 'text/html'})
+        removeone = postremove.Remove()
+        removeone.removecomic(text_string=remove)
+        self.wfile.write(b"<h2>NOICE</h2>")
 
 
 

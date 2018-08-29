@@ -37,6 +37,12 @@ function addcomic(q) {
         $("addedcard" + f).hide();
         $(a.firstChild).hide(200, function(){
             $("addedcard" + f).show(200);
+            $.get(
+                "add/" + f,
+                function() {
+                    showLibrary();
+                }
+            );
             waitremove = setTimeout(function(){
                 $(a).hide(200, function(){
                     a.remove(a);
@@ -78,4 +84,34 @@ function addcomic(q) {
 
     findrootdiv(q)
 
+}
+
+function removecomic(a) {
+    var a
+    var s
+    var d
+    var f
+
+    function switchremove(a, f){
+        $(a).hide(200, function(){
+            $.get(
+                "remove/" + f,
+                function() {
+                    showLibrary();
+                }
+            );
+        });
+    }
+
+    function findid(a) {
+        f = a.getElementsByClassName("comic-id")[0].innerText
+        switchremove(a, f)
+    }
+
+    function findtitle(a) {
+        s = a.getElementsByClassName("title")[0].innerText
+        findid(a)
+    }
+
+    findtitle(a)
 }

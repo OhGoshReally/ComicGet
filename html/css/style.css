@@ -73,6 +73,9 @@ body {
     color: var(--main-text-color);
     box-shadow: 0 1px 4px rgba(0,0,0,.04);
     border: 1px solid rgba(0,0,0,.09);
+    border: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,.25);
+    /*box-shadow: 0px 1px 4px 2px hsla(0, 0%, 0%, 0.27)*/
 }
 
 .prevsyn {
@@ -466,7 +469,9 @@ body {
 }
 
 .posterimg {
-  max-width: 200px;
+  /*max-width: 245px;*/
+  max-width: 190px;
+  border-radius: .25rem !important;
 }
 
 .library-card {
@@ -481,12 +486,12 @@ body {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.83);
   font-weight: bold;
-  padding-top: 60%;
   overflow: hidden;
   height: 100%;
   font-size: 1.3rem;
   color: rgb(70, 70, 70);
   opacity: 1;
+  border-radius: .25rem;
 }
 
 .posteroverlay2 {
@@ -495,18 +500,31 @@ body {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.83);
   font-weight: bold;
-  padding-top: 10%;
   overflow: hidden;
   height: 100%;
   font-size: 1.3rem;
   color: rgb(70, 70, 70);
   opacity: 1;
   z-index: 2;
+  border-radius: .15rem;
+}
+
+.posteroverlay-table {
+  display: table;
+  height: 100%;
+  width:100%
+}
+
+.posteroverlay-text {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 10px 0 10px;
 }
 
 #library-entries {
   margin-left: -30px;
   margin-right: -30px;
+  overflow: hidden;
 }
 
 #seaicon2 {

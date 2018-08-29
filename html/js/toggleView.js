@@ -1,7 +1,5 @@
 function toggleView(a) {
     if (!a.className.includes("active")) {
-        console.log(a)
-        //element.classList.add("active")
 
         var f = document.getElementById("submenu-Library").getElementsByClassName("contentdivs")
         var d
@@ -17,19 +15,30 @@ function toggleView(a) {
 }
 
 function cardHoverOn(r) {
-    console.log(r);
     if (r.firstChild.firstChild.className == "posteroverlay" && r.firstChild.style.display == "") {
         $(r.firstChild.firstChild).fadeTo(100, 0.9);
     } else {
         $(r.lastChild.firstChild).fadeTo(100, 0.9);
-    }
+    }/*
+    $(r).animate({
+        top: "-=10",
+        boxShadow: "0px 10px 4px 2px hsla(0, 0%, 0%, 0.27);"
+        }, 100, function() {
+        // Animation complete.
+    });*/
 }
 
 function cardHoverOff(r) {
-    console.log(r);
     if (r.firstChild.firstChild.className == "posteroverlay" && r.firstChild.style.display == "") {
         $(r.firstChild.firstChild).fadeTo(100, 0);
     } else {
         $(r.lastChild.firstChild).fadeTo(100, 0);
     }
+    /*
+    $(r).animate({
+        top: "+=10",
+        boxShadow: "0px 1px 4px 2px hsla(0, 0%, 0%, 0.27)"
+        }, 100, function() {
+        // Animation complete.
+    });*/
 }
