@@ -1,5 +1,8 @@
 function toggleView(a) {
+    console.log(a.id);
     if (!a.className.includes("active")) {
+
+        $.get("/settings/ui/default_view/" + a.id);
 
         var f = document.getElementById("submenu-Library").getElementsByClassName("contentdivs")
         var d
@@ -9,36 +12,16 @@ function toggleView(a) {
             }
         }
         a.classList.add("active")
-        $(".lilcontainer").toggle();
-        $(".bigcontainer").toggle();
+        $("#library-entries").find(".bigcontainer").toggle();
+        $("#library-entries").find(".lilcontainer").toggle();
     }
 }
 
-function cardHoverOn(r) {
-    if (r.firstChild.firstChild.className == "posteroverlay" && r.firstChild.style.display == "") {
-        $(r.firstChild.firstChild).fadeTo(100, 0.9);
-    } else {
-        $(r.lastChild.firstChild).fadeTo(100, 0.9);
-    }/*
-    $(r).animate({
-        top: "-=10",
-        boxShadow: "0px 10px 4px 2px hsla(0, 0%, 0%, 0.27);"
-        }, 100, function() {
-        // Animation complete.
-    });*/
-}
-
-function cardHoverOff(r) {
-    if (r.firstChild.firstChild.className == "posteroverlay" && r.firstChild.style.display == "") {
-        $(r.firstChild.firstChild).fadeTo(100, 0);
-    } else {
-        $(r.lastChild.firstChild).fadeTo(100, 0);
-    }
-    /*
-    $(r).animate({
-        top: "+=10",
-        boxShadow: "0px 1px 4px 2px hsla(0, 0%, 0%, 0.27)"
-        }, 100, function() {
-        // Animation complete.
-    });*/
+function toggleHover() {
+    $(".library-card").on('mouseover', function(){
+        $(this).find('.posteroverlay').stop().fadeTo(100, 0.9);
+    });
+    $(".library-card").on('mouseout', function(){
+        $(this).find('.posteroverlay').stop().fadeTo(100, 0);
+    });
 }

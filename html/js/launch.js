@@ -30,5 +30,3 @@ $("#submenuoptions-settings").hide();
 $("#submenuoptions-system").hide();
 $("#submenuoptions-activity").hide();
 $("#submenuoptions-wanted").hide();
-
-showLibrary()

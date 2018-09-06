@@ -1,6 +1,11 @@
-function showLibrary() {
+function showLibrary(settings) {
     var listfile = "/static/library/list.json"
     var imgdir = "/static/library/img"
+
+    if (settings['ui']['default_view'] == "view-poster"){
+        $('#view-poster').addClass("active");
+        $('#view-card').removeClass("active")
+    }
 
     $('#library-entries').off('DOMNodeInserted');
     $('#library-entries').on('DOMNodeInserted',function(e){
@@ -59,6 +64,8 @@ function showLibrary() {
         }
     }
 
+    var entireList = []
+
     $.getJSON(listfile, callbackFuncWithData);
     function callbackFuncWithData(data){
 
@@ -76,249 +83,204 @@ function showLibrary() {
                 published = ' (' + published.slice(0, 4) + ')'
             }
 
+            entireList.push(data[i].title + published)
+
             var div = document.createElement('div');
             div.setAttribute('class', 'card resultcards library-card');
-            div.setAttribute('id', "library-card" + i);
-            //div.setAttribute('style', 'opacity: 0;');
-            div.setAttribute('onmouseover', 'cardHoverOn(this)');
-            div.setAttribute('onmouseleave', 'cardHoverOff(this)');
-            div.setAttribute('onclick', 'removecomic(this)');
+            //div.setAttribute('onclick', 'removecomic(this)');
+            div.setAttribute('onclick', 'bigPageOn(this)');
             document.getElementById('library-entries').appendChild(div);
-            
+
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'posteroverlay');
+            div.appendChild(div2);
+
+            var div = document.createElement('div');
+            div.setAttribute('class', 'posteroverlay-table');
+            div2.appendChild(div);
+
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'posteroverlay-text');
+            div2.innerHTML = data[i].title + published
+            div.appendChild(div2);
+
             var div = document.createElement('div');
             div.setAttribute('class', 'container imgdiv lilcontainer');
-            div.setAttribute('style', 'display: none;');
-            div.setAttribute('id', "library-poster" + i);
-            document.getElementById('library-card' + i).appendChild(div);
+            if (settings['ui']['default_view'] == "view-card"){
+                div.setAttribute('style', 'display: none;');
+            }
+            $(div2).parents(".library-card")[0].appendChild(div);
+
+            var div2 = document.createElement('img');
+            div2.setAttribute('class', 'card-img-top posterimg');
+            div2.setAttribute('src', imgdir + '/' + i + '/poster.jpg');
+            div.appendChild(div2);
 
             var div = document.createElement('div');
-            div.setAttribute('class', 'posteroverlay');
-            div.setAttribute('style', 'opacity: 0;');
-            div.setAttribute('id', "library-posteroverlay" + i);
-            document.getElementById('library-poster' + i).appendChild(div);
-
-            var div = document.createElement('div');
-            div.setAttribute('class', 'posteroverlay-table');
-            div.setAttribute('id', "library-posteroverlay-table" + i);
-            document.getElementById('library-posteroverlay' + i).appendChild(div);
-
-            var div = document.createElement('div');
-            div.setAttribute('class', 'posteroverlay-text');
-            div.innerHTML = data[i].title + published
-            document.getElementById('library-posteroverlay-table' + i).appendChild(div);
-
-            var div = document.createElement('img');
-            div.setAttribute('class', 'card-img-top posterimg');
-            div.setAttribute('src', imgdir + '/' + i + '/poster.jpg');
-            div.setAttribute('id', "library-posterimg" + i);
-            document.getElementById('library-poster' + i).appendChild(div);
-
-            var div = document.createElement('div');
+            if (settings['ui']['default_view'] == "view-poster"){
+                div.setAttribute('style', 'display: none;');
+            }
             div.setAttribute('class', 'container bigcontainer');
-            div.setAttribute('id', "library-firstcontainer" + i);
-            document.getElementById("library-card" + i).appendChild(div);
+            $(div2).parents(".library-card")[0].appendChild(div);
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'posteroverlay2');
-            div.setAttribute('style', 'opacity: 0;');
-            div.setAttribute('id', "library-posteroverlay2" + i);
-            document.getElementById("library-firstcontainer" + i).appendChild(div);
-
-            var div = document.createElement('div');
-            div.setAttribute('class', 'posteroverlay-table');
-            div.setAttribute('id', "library-posteroverlay-table2" + i);
-            document.getElementById('library-posteroverlay2' + i).appendChild(div);
-
-            var div = document.createElement('div');
-            div.setAttribute('class', 'posteroverlay-text');
-            div.innerHTML = data[i].title + published
-            document.getElementById("library-posteroverlay-table2" + i).appendChild(div);
-
-            var div = document.createElement('div');
-            div.setAttribute('class', 'container-fluid');
-            div.setAttribute('id', "library-innercontainer1" + i);
-            document.getElementById("library-firstcontainer" + i).appendChild(div);
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'container-fluid');
+            div.appendChild(div2);
 
             //////////////////////////////
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'row cardrow');
-            div.setAttribute('id', "library-cardrow" + i);
-            document.getElementById("library-innercontainer1" + i).appendChild(div);
+            var div3 = document.createElement('div');
+            div3.setAttribute('class', 'row cardrow');
+            div2.appendChild(div3);
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'col-2 imgdiv');
-            div.setAttribute('id', "library-cardcol1" + i);
-            div.innerHTML = '<img class="card-img-top" src="' + imgdir + '/' + i + '/poster.jpg' + '" alt="Card image' + i + 'cap">';
-            document.getElementById("library-cardrow" + i).appendChild(div);
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'col-2 imgdiv');
+            div3.appendChild(div2);
+
+            var div = document.createElement('img');
+            div.setAttribute('class', 'card-img-top');
+            div.setAttribute('src', imgdir + '/' + i + '/poster.jpg');
+            div.setAttribute('alt', 'Card image' + i + 'cap');
+            div2.appendChild(div);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'col');
-            div.setAttribute('id', "library-cardcol2" + i);
-            document.getElementById("library-cardrow" + i).appendChild(div);
+            div3.appendChild(div);
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'h-100 d-flex flex-column');
-            div.setAttribute('id', "library-innercolumns" + i);
-            document.getElementById("library-cardcol2" + i).appendChild(div);
-
-            var div = document.createElement('div');
-            div.setAttribute('class', 'row');
-            div.setAttribute('id', "library-innerrow1" + i);
-            document.getElementById("library-innercolumns" + i).appendChild(div);
-
-            var div = document.createElement('div');
-            div.setAttribute('class', 'card-body titlecard');
-            div.setAttribute('id', "library-innercardbody" + i);
-            document.getElementById("library-innerrow1" + i).appendChild(div);
-
-            var div = document.createElement('div');
-            div.setAttribute('class', 'container');
-            div.setAttribute('id', "library-innercontainer3" + i);
-            document.getElementById("library-innercardbody" + i).appendChild(div);
+            var div5 = document.createElement('div');
+            div5.setAttribute('class', 'h-100 d-flex flex-column');
+            div.appendChild(div5);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'row');
-            div.setAttribute('id', "library-innerrow4" + i);
-            document.getElementById("library-innercontainer3" + i).appendChild(div);
+            div5.appendChild(div);
+
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'card-body titlecard');
+            div.appendChild(div2);
+
+            var div3 = document.createElement('div');
+            div3.setAttribute('class', 'container');
+            div2.appendChild(div3);
+
+            var div4 = document.createElement('div');
+            div4.setAttribute('class', 'row');
+            div3.appendChild(div4);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'row');
-            div.setAttribute('id', "library-innerrow5" + i);
-            document.getElementById("library-innercontainer3" + i).appendChild(div);
+            div3.appendChild(div);
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'container');
-            div.setAttribute('id', "library-innercontainer4" + i);
-            document.getElementById("library-innerrow5" + i).appendChild(div);
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'container');
+            div.appendChild(div2);
 
             ///////////////////
 
             var div = document.createElement('h6');
             div.setAttribute('class', 'chapter-titles');
             div.innerHTML = data[i].chapters + " Chapters";
-            document.getElementById("library-innercontainer4" + i).appendChild(div);
+            div2.appendChild(div);
 
             ///////////////////
 
             var div = document.createElement('div');
             div.setAttribute('class', 'col');
-            div.setAttribute('id', "library-innercol3" + i);
-            document.getElementById("library-innerrow4" + i).appendChild(div);
+            div4.appendChild(div);
 
-            var div = document.createElement('h5');
-            div.setAttribute('class', 'comic-titles');
-            div.setAttribute('id', "library-comictitle" + i);
-            document.getElementById("library-innercol3" + i).appendChild(div);
+            var div7 = document.createElement('h5');
+            div7.setAttribute('class', 'comic-titles');
+            div.appendChild(div7);
 
             ///////////
 
             var div = document.createElement('div');
             div.setAttribute('class', 'col-2 indexertab');
-            div.setAttribute('id', "library-innercol4" + i);
-            document.getElementById("library-innerrow4" + i).appendChild(div);
+            div4.appendChild(div);
 
-            var div = document.createElement('h5');
-            div.setAttribute('class', 'indexer d-none d-lg-block');
-            div.innerHTML = data[i].indexer;
-            document.getElementById("library-innercol4" + i).appendChild(div);
+            var div2 = document.createElement('h5');
+            div2.setAttribute('class', 'indexer d-none d-lg-block');
+            div2.innerHTML = data[i].indexer;
+            div4.appendChild(div);
 
             ///////////////////
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'row');
-            div.setAttribute('id', "library-innerrow2" + i);
-            document.getElementById("library-innercolumns" + i).appendChild(div);
+            var div6 = document.createElement('div');
+            div6.setAttribute('class', 'row');
+            div5.appendChild(div6);
             
-            var div = document.createElement('div');
-            div.setAttribute('class', 'row flex-grow-1');
-            div.setAttribute('id', "library-innerrow3" + i);
-            document.getElementById("library-innercolumns" + i).appendChild(div);
+            var div3 = document.createElement('div');
+            div3.setAttribute('class', 'row flex-grow-1');
+            div5.appendChild(div3);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'col');
             div.setAttribute('style', 'align-self: flex-end;');
-            div.setAttribute('id', "library-inneinnercol4" + i);
-            document.getElementById("library-innerrow3" + i).appendChild(div);
+            div3.appendChild(div);
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'card-body tagcard');
-            div.setAttribute('id', "library-tagcard" + i);
-            document.getElementById("library-inneinnercol4" + i).appendChild(div);
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'card-body tagcard');
+            div.appendChild(div2);
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'container tagcontainer');
-            div.setAttribute('style', 'padding: 0px;');
-            div.setAttribute('id', "library-tagcontainer" + i);
-            document.getElementById("library-tagcard" + i).appendChild(div);
+            var div8 = document.createElement('div');
+            div8.setAttribute('class', 'container tagcontainer');
+            div8.setAttribute('style', 'padding: 0px;');
+            div2.appendChild(div8);
 
             ///////////////
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'col-3');
-            div.setAttribute('style', 'align-self: flex-end;');
-            div.setAttribute('id', "library-inneinnercol5" + i);
-            document.getElementById("library-innerrow3" + i).appendChild(div);
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'col-3');
+            div2.setAttribute('style', 'align-self: flex-end;');
+            div3.appendChild(div2);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'card-body');
-            div.setAttribute('id', "library-progresscardbody" + i);
-            document.getElementById("library-inneinnercol5" + i).appendChild(div);
+            div2.appendChild(div);
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'progress');
-            div.setAttribute('id', "library-progress" + i);
-            document.getElementById("library-progresscardbody" + i).appendChild(div);
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'progress');
+            div.appendChild(div2);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'progress-bar');
-            div.setAttribute('role', 'progressbar');
-            div.setAttribute('aria-valuenow', '75');
-            div.setAttribute('aria-valuemin', '0');
-            div.setAttribute('aria-valuemax', '100');
-            div.setAttribute('id', "library-progress-bar" + i);
             div.innerHTML = data[i].monitored.got + " / " + data[i].monitored.want
-            document.getElementById("library-progress" + i).appendChild(div);
+            div2.appendChild(div);
 
-            var div = document.createElement('div');
+            var div2 = document.createElement('div');
 
             if (Number(data[i].monitored.got) < Number(data[i].monitored.want)) {
-                div.setAttribute('class', 'progress-fill progressbar-missing');
+                div2.setAttribute('class', 'progress-fill progressbar-missing');
             } else if (Number(data[i].monitored.got) == Number(data[i].monitored.want) && data[i].status == "finished") {
-                div.setAttribute('class', 'progress-fill progressbar-complete');
+                div2.setAttribute('class', 'progress-fill progressbar-complete');
             } else if (Number(data[i].monitored.got) == Number(data[i].monitored.want) && data[i].status == "current") {
-                div.setAttribute('class', 'progress-fill progressbar-ongoing');
+                div2.setAttribute('class', 'progress-fill progressbar-ongoing');
             }
 
             var prgr
             prgr = "width: " + ((data[i].monitored.got * 100 / data[i].monitored.want) + "%;");
 
-            div.setAttribute('style', prgr);
-            div.setAttribute('id', "library-progress-fill" + i);
-            document.getElementById("library-progress-bar" + i).appendChild(div);
+            div2.setAttribute('style', prgr);
+            div.appendChild(div2);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'progress-fill-text');
-            div.setAttribute('id', "library-fill-text" + i);
             div.innerHTML = data[i].monitored.got + " / " + data[i].monitored.want
-            document.getElementById("library-progress-fill" + i).appendChild(div);
+            div2.appendChild(div);
 
             //////////////
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'col');
-            div.setAttribute('id', "library-innercol5" + i);
-            document.getElementById("library-innerrow2" + i).appendChild(div);
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'col');
+            div6.appendChild(div2);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'col-1');
-            div.setAttribute('id', "library-innercol6" + i);
-            document.getElementById("library-innerrow2" + i).appendChild(div);
+            div6.appendChild(div);
 
             var div = document.createElement('div');
             div.setAttribute('class', 'card-body syncard');
-            div.setAttribute('id', "library-innercardbody2" + i);
-            document.getElementById("library-innercol5" + i).appendChild(div);
+            div2.appendChild(div);
 
             //////////////////
 
@@ -347,21 +309,19 @@ function showLibrary() {
             
             //////////////////
 
-            var div = document.createElement('p');
-            div.setAttribute('class', 'prevsyn');
-            div.setAttribute('id', "library-prevsyn" + i);
-            div.innerHTML = syno;
-            document.getElementById("library-innercardbody2" + i).appendChild(div);
+            var div2 = document.createElement('p');
+            div2.setAttribute('class', 'prevsyn');
+            div2.innerHTML = syno;
+            div.appendChild(div2);
 
             var div = document.createElement('span');
-            div.setAttribute('id', "library-thetitle" + i);
             div.innerHTML = str;
-            document.getElementById("library-comictitle" + i).appendChild(div);
+            div7.appendChild(div);
 
-            var div = document.createElement('span');
-            div.setAttribute('class', "comic-id");
-            div.innerHTML = data[i].id;
-            document.getElementById("library-thetitle" + i).appendChild(div);
+            var div2 = document.createElement('span');
+            div2.setAttribute('class', "comic-id");
+            div2.innerHTML = data[i].id;
+            div.appendChild(div2);
 
             ///////////////////////
 
@@ -373,17 +333,17 @@ function showLibrary() {
                         var div = document.createElement('span');
                         div.setAttribute('class', 'tagcomma');
                         div.innerHTML = ",";
-                        document.getElementById("library-tagcontainer" + i).appendChild(div);
+                        div8.appendChild(div);
 
                         var div = document.createElement('span');
                         div.setAttribute('class', 'cattags');
                         div.innerHTML = data[i].tags[x];
-                        document.getElementById("library-tagcontainer" + i).appendChild(div);
+                        div8.appendChild(div);
                     } else {
                         var div = document.createElement('span');
                         div.setAttribute('class', 'cattags');
                         div.innerHTML = data[i].tags[x];
-                        document.getElementById("library-tagcontainer" + i).appendChild(div);
+                        div8.appendChild(div);
                     }
                 } catch (error) {
                 }
@@ -391,45 +351,13 @@ function showLibrary() {
 
             ///////////////////////
 
-            (document.getElementById("library-innercontainer4" + i)).removeAttribute("id");
-            (document.getElementById("library-innerrow5" + i)).removeAttribute("id");
-            (document.getElementById("library-innerrow4" + i)).removeAttribute("id");
-            (document.getElementById("library-innercontainer3" + i)).removeAttribute("id");
-            (document.getElementById("library-innercardbody" + i)).removeAttribute("id");
-            (document.getElementById("library-innerrow1" + i)).removeAttribute("id");
-            (document.getElementById("library-prevsyn" + i)).removeAttribute("id");
-            (document.getElementById("library-innercardbody2" + i)).removeAttribute("id");
-            (document.getElementById("library-innercol5" + i)).removeAttribute("id");
-            (document.getElementById("library-innerrow2" + i)).removeAttribute("id");
-            (document.getElementById("library-innercol6" + i)).removeAttribute("id");
-            (document.getElementById("library-tagcontainer" + i)).removeAttribute("id");
-            (document.getElementById("library-tagcard" + i)).removeAttribute("id");
-            (document.getElementById("library-innerrow3" + i)).removeAttribute("id");
-            (document.getElementById("library-innercolumns" + i)).removeAttribute("id");
-            (document.getElementById("library-cardcol2" + i)).removeAttribute("id");
-            (document.getElementById("library-cardcol1" + i)).removeAttribute("id");
-            (document.getElementById("library-cardrow" + i)).removeAttribute("id");
-            (document.getElementById("library-innercol4" + i)).removeAttribute("id");
-            (document.getElementById("library-comictitle" + i)).removeAttribute("id");
-            (document.getElementById("library-innercol3" + i)).removeAttribute("id");
-            (document.getElementById("library-thetitle" + i)).removeAttribute("id");
-            (document.getElementById("library-innercontainer1" + i)).removeAttribute("id");
-            (document.getElementById("library-firstcontainer" + i)).removeAttribute("id");
-            (document.getElementById("library-inneinnercol4" + i)).removeAttribute("id");
-            (document.getElementById("library-inneinnercol5" + i)).removeAttribute("id");
-            (document.getElementById("library-progress" + i)).removeAttribute("id");
-            (document.getElementById("library-progress-bar" + i)).removeAttribute("id");
-            (document.getElementById("library-progress-fill" + i)).removeAttribute("id");
-            (document.getElementById("library-fill-text" + i)).removeAttribute("id");
-            (document.getElementById("library-progresscardbody" + i)).removeAttribute("id");
-            (document.getElementById("library-poster" + i)).removeAttribute("id");
-            (document.getElementById("library-posterimg" + i)).removeAttribute("id");
-            (document.getElementById("library-posteroverlay" + i)).removeAttribute("id");
-            (document.getElementById("library-posteroverlay-table" + i)).removeAttribute("id");
-            (document.getElementById("library-posteroverlay-table2" + i)).removeAttribute("id");
-            
-            ///////////////////////
-
         }
+        $( function() {
+            $( "#localsearch" ).autocomplete({
+              source: entireList
+            });
+            $("#ui-id-1").css('max-width',$("#localsearch").parent().width())
+          } );
+        toggleHover();
     }
 }

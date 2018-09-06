@@ -5,6 +5,7 @@ import json
 from indexers import kitsu
 from web import postadd
 from web import postremove
+from web import postsettings
 
 class rhandler(BaseHTTPRequestHandler):
 
@@ -21,6 +22,7 @@ class rhandler(BaseHTTPRequestHandler):
             "search": self._search,
             "add": self._add,
             "remove": self._remove,
+            "settings": self._settings,
         }
         func = command.get(self.path.split('/')[1], self._404)
         func(self.path.split('/')[2:])
@@ -81,6 +83,11 @@ class rhandler(BaseHTTPRequestHandler):
         removeone.removecomic(text_string=remove)
         self.wfile.write(b"<h2>NOICE</h2>")
 
+    def _settings(self, settings):
+        self._set_headers(header={'keyword':'Content-type', 'value': 'text/html'})
+        newsetting = postsettings.Settings()
+        newsetting.changesettings(text_string=settings)
+        self.wfile.write(b"<h2>NOICE</h2>")
 
 
 def run(server_class=HTTPServer, handler_class=rhandler, port=8080):

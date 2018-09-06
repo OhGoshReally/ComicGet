@@ -40,7 +40,9 @@ function addcomic(q) {
             $.get(
                 "add/" + f,
                 function() {
-                    showLibrary();
+                    $.getJSON("/static/settings.json", function(settings){
+                        showLibrary(settings);
+                    });
                 }
             );
             waitremove = setTimeout(function(){
@@ -97,7 +99,9 @@ function removecomic(a) {
             $.get(
                 "remove/" + f,
                 function() {
-                    showLibrary();
+                    $.getJSON("/static/settings.json", function(settings){
+                        showLibrary(settings);
+                    });
                 }
             );
         });

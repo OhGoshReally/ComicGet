@@ -91,3 +91,13 @@ class Add():
             r = requests.get(url)
             with open(imgpath, 'wb') as f:
                 f.write(r.content)
+
+            imgpath = os.path.join(imgdir, './cover.jpg')
+            imgpath = os.path.abspath(os.path.realpath(imgpath))
+            print(imgpath)
+
+            url = attributes['coverImage']['original']
+
+            r = requests.get(url)
+            with open(imgpath, 'wb') as f:
+                f.write(r.content)

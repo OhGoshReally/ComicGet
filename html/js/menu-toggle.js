@@ -5,43 +5,28 @@ function menutoggle(thebutton){
     var allmenuitems = Array.from(allmenuitems)
     var allmenuitems = allmenuitems.filter(word => word.nodeName == "LI")
 
-    $.each(allmenuitems, function(i) {
-        var cachename = allmenuitems[i].id.replace(/item[-]/igm, "");
-        var act = "active"
-        if (allmenuitems[i].className.includes(act)) {
-            var element = document.getElementById(allmenuitems[i].id);
-            element.classList.remove("active");
-            hidethisdiv = cachename
-        }
-        if (allmenuitems[i].id == thebutton) {
-            var element = document.getElementById(allmenuitems[i].id);
-            element.classList.add("active")
-            showthisdiv = cachename
-        }
-    });
-
-    if (hidethisdiv !== showthisdiv){
-        $('#' + hidethisdiv + ", #submenudiv").fadeOut(100, function(){
-            $('#' + showthisdiv).fadeIn(100);
-            $('.submenuoptions').hide();
-            if (showthisdiv == "menu-Settings"){
-                $('#submenuoptions-settings').show();
-            }
-            if (showthisdiv == "menu-System") {
-                $('#submenuoptions-system').show();
-            }
-            if (showthisdiv == "menu-Home") {
-                $('#submenuoptions-home').show();
-            }
-            if (showthisdiv == "menu-Activity") {
-                $('#submenuoptions-activity').show();
-            }
-            if (showthisdiv == "menu-Wanted") {
-                $('#submenuoptions-wanted').show();
-            }
-            $('#submenudiv').fadeIn(100);
-        });
+    if ($("#smallPage")[0].style.display == "none") {
+        bigPageOff()
     }
+    
+    $("#menuoptions").children().removeClass("active");
+    $(thebutton).parent().addClass("active");
+
+    var cachename = $(thebutton).parent()[0].id.replace(/item[-]/igm, "");
+    
+    $("#smallPage").children().not("#divider").not("#"+cachename).filter(function() { return $(this).css('display') !== 'none'; }).fadeOut(100, function(){
+        $("#smallPage").find("#"+cachename).fadeIn(100)
+    })
+
+    var cachename2 = cachename.replace(/menu[-]/igm,"");
+    cachename2 = cachename2.toLowerCase();
+
+    console.log($("#allsuboptions").children().not($("#submenuoptions-"+cachename2)))
+    console.log($("#allsuboptions").find($("#submenuoptions-"+cachename2)))
+
+    $("#allsuboptions").children().not($("#submenuoptions-"+cachename2)).filter(function() { return $(this).css('display') !== 'none'; }).fadeOut(100, function(){
+        $("#allsuboptions").find($("#submenuoptions-"+cachename2)).fadeIn(100);
+    });
 }
 
 function submenutoggle(thebutton){
