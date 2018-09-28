@@ -1,0 +1,35 @@
+@keyframes slide-left {
+    0% {transform: translate3d(-8rem, 0rem, 0rem);}
+    100% {transform: translate3d(0rem, 0rem, 0rem);}
+}
+
+@keyframes slide-right {
+    0% {transform: translate3d(8rem, 0rem, 0rem);}
+    100% {transform: translate3d(0rem, 0rem, 0rem);}
+}
+
+@keyframes slide-top {
+    0% {transform: translate3d(0rem, -8rem, 0rem);}
+    100% {transform: translate3d(0rem, 0rem, 0rem);}
+}
+
+@keyframes slide-bottom {
+    0% {transform: translate3d(0rem, 8rem, 0rem);}
+    100% {transform: translate3d(0rem, 0rem, 0rem);}
+}
+
+@keyframes zoom {
+	0% {transform: scale3d(0, 0, 1);}
+	100% {transform: scale3d(0, 0, 1);}
+}
+
+@keyframes fade {
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+
+@keyframes no-flash {
+	0% {opacity:0;}
+	50% {opacity:0;}
+	100% {opacity:1;}
+}

@@ -21,9 +21,6 @@ function menutoggle(thebutton){
     var cachename2 = cachename.replace(/menu[-]/igm,"");
     cachename2 = cachename2.toLowerCase();
 
-    console.log($("#allsuboptions").children().not($("#submenuoptions-"+cachename2)))
-    console.log($("#allsuboptions").find($("#submenuoptions-"+cachename2)))
-
     $("#allsuboptions").children().not($("#submenuoptions-"+cachename2)).filter(function() { return $(this).css('display') !== 'none'; }).fadeOut(100, function(){
         $("#allsuboptions").find($("#submenuoptions-"+cachename2)).fadeIn(100);
     });

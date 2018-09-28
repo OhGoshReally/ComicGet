@@ -41,25 +41,11 @@ function querySearch(){
                         var x
                         for (x = 0; x < data.data.length; x++) {
                             try {
-                                if (x > 0) {
-                                    var div = document.createElement('span');
-                                    div.setAttribute('class', 'tagcomma');
-                                    div.setAttribute('style', 'opacity: 0');
-                                    div.innerHTML = ",";
-                                    d.appendChild(div);
-
-                                    var div = document.createElement('span');
-                                    div.setAttribute('class', 'cattags');
-                                    div.setAttribute('style', 'opacity: 0');
-                                    div.innerHTML = data.data[x].attributes.title;
-                                    d.appendChild(div);
-                                } else {
-                                    var div = document.createElement('span');
-                                    div.setAttribute('class', 'cattags');
-                                    div.setAttribute('style', 'opacity: 0');
-                                    div.innerHTML = data.data[x].attributes.title;
-                                    d.appendChild(div);
-                                }
+                                var div = document.createElement('span');
+                                div.setAttribute('class', 'cattags');
+                                div.setAttribute('style', 'opacity: 0');
+                                div.innerHTML = data.data[x].attributes.title;
+                                d.appendChild(div);
                             } catch (error) {
                             }
                         }
@@ -142,6 +128,8 @@ function querySearch(){
     $.getJSON(queryurl, callbackFuncWithData);
     function callbackFuncWithData(data){
 
+        console.log(data)
+
         if (data.data.length > 0) {
             results = "<h5>Found <span id=\"resultnumber\">" + data.data.length + "</span> results.</h5>"
             
@@ -212,6 +200,10 @@ function querySearch(){
                 div.setAttribute('id', "bottomcol11" + currentresult);
                 document.getElementById("bottomrow1" + currentresult).appendChild(div);
 
+                var div = document.createElement('label');
+                div.innerText = 'Profile'
+                document.getElementById("bottomcol11" + currentresult).appendChild(div);
+
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-4');
                 div.setAttribute('id', "bottomcol12" + currentresult);
@@ -239,7 +231,7 @@ function querySearch(){
                 var div = document.createElement('div');
                 div.setAttribute('class', 'col-2');
                 div.setAttribute('id', "bottomcol21" + currentresult);
-                div.innerHTML = ''
+                div.innerHTML = '<select class="custom-select"><option value="1">Tiny</option><option value="1">Medium</option><option selected="" value="2">Large</option></select>'
                 document.getElementById("bottomrow2" + currentresult).appendChild(div);
 
                 var div = document.createElement('div');

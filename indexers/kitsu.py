@@ -1,5 +1,6 @@
 import requests
 import os
+from db import database as p
 
 from .baseindexer import BaseIndexer, BaseCacher
 
@@ -9,7 +10,7 @@ class KitsuIndexer(BaseIndexer):
         'Accept': 'application/vnd.api+json',
         'Content-Type': 'application/vnd.api+json'
         }
-    indexer_id = 'KITSU'
+    indexer_id = 'Kitsu'
     cacher = None
 
     def __init__(self, user_agent=None, cache_dir=None):
@@ -39,67 +40,68 @@ class KitsuIndexer(BaseIndexer):
         response['data'] = []
 
         for result in j['data']:
-            external_link = 'https://kitsu.io/manga/'
-            attributes = result['attributes']
-            posters = attributes['posterImage']
-            covers = attributes['coverImage']
-            slug = attributes['slug']
-            #chapter_count = attributes['chapterCount']
-            manga = {
-                'id': result['id'],
-                'type': result['type'],
-                'title': attributes['canonicalTitle'],
-                'synopsis': attributes['synopsis'],
-                'start_date': attributes['startDate'],
-                'end_date': attributes['endDate'],
-                'status': attributes['status'],
-                'chapter_count': attributes['chapterCount'],
-                'volume_count': attributes['volumeCount'],
-                'serialization': attributes['serialization'],
-                'average_rating': attributes['averageRating']
-            }
-            sizes = ['tiny', 'small', 'medium', 'large', 'original']
-            poster = {}
-            if posters != None:
-                for size in sizes:
-                    if size in posters:
-                        poster[size] = posters[size]
+            if not p.Comic.select().where(p.Comic.externalsite == self.indexer_id).where(p.Comic.externalid == result['id']).exists():
+                external_link = 'https://kitsu.io/manga/'
+                attributes = result['attributes']
+                posters = attributes['posterImage']
+                covers = attributes['coverImage']
+                slug = attributes['slug']
+                #chapter_count = attributes['chapterCount']
+                manga = {
+                    'id': result['id'],
+                    'type': result['type'],
+                    'title': attributes['canonicalTitle'],
+                    'synopsis': attributes['synopsis'],
+                    'start_date': attributes['startDate'],
+                    'end_date': attributes['endDate'],
+                    'status': attributes['status'],
+                    'chapter_count': attributes['chapterCount'],
+                    'volume_count': attributes['volumeCount'],
+                    'serialization': attributes['serialization'],
+                    'average_rating': attributes['averageRating']
+                }
+                sizes = ['tiny', 'small', 'medium', 'large', 'original']
+                poster = {}
+                if posters != None:
+                    for size in sizes:
+                        if size in posters:
+                            poster[size] = posters[size]
 
-            manga['poster'] = poster
+                manga['poster'] = poster
 
-            #tagurl = result['relationships']['categories']['links']['related']
-            #tagres = requests.get(tagurl)
-            #tagjso = tagres.json()
-            #tags = {}
-            #tagnmb = 0
-            #for tag in tagjso['data']:
-            #    tags[tagnmb] = tag['attributes']['title']
-            #    tagnmb += 1
+                #tagurl = result['relationships']['categories']['links']['related']
+                #tagres = requests.get(tagurl)
+                #tagjso = tagres.json()
+                #tags = {}
+                #tagnmb = 0
+                #for tag in tagjso['data']:
+                #    tags[tagnmb] = tag['attributes']['title']
+                #    tagnmb += 1
 
-            #manga['tags'] = tags
+                #manga['tags'] = tags
 
-            #if (chapter_count is None):
-            #    chaurl = result['relationships']['chapters']['links']['self']
-            #    chares = requests.get(chaurl)
-            #    chajso = chares.json()
-            #    chapter_count = len(chajso['data'])
+                #if (chapter_count is None):
+                #    chaurl = result['relationships']['chapters']['links']['self']
+                #    chares = requests.get(chaurl)
+                #    chajso = chares.json()
+                #    chapter_count = len(chajso['data'])
 
-            #manga['chapter_count'] = chapter_count
+                #manga['chapter_count'] = chapter_count
 
-            cover = {}
-            if covers != None:
-                for size in sizes:
-                    if size in covers:
-                        cover[size] = covers[size]
+                cover = {}
+                if covers != None:
+                    for size in sizes:
+                        if size in covers:
+                            cover[size] = covers[size]
 
-            manga['cover'] = cover
+                manga['cover'] = cover
 
-            manga['external_link'] = external_link + slug
+                manga['external_link'] = external_link + slug
 
-            #self.cache_imgs(manga['id'], 'poster', poster)
-            #self.cache_imgs(manga['id'], 'cover', cover)
+                #self.cache_imgs(manga['id'], 'poster', poster)
+                #self.cache_imgs(manga['id'], 'cover', cover)
 
-            response['data'].append(manga)
+                response['data'].append(manga)
 
         
 
@@ -125,4 +127,4 @@ class KitsuIndexer(BaseIndexer):
 
 
 class KitsuCacher(BaseCacher):
-    indexer_id = 'KITSU'
+    indexer_id = 'Kitsu'

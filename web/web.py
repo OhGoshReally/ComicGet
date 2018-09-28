@@ -6,6 +6,8 @@ from indexers import kitsu
 from web import postadd
 from web import postremove
 from web import postsettings
+from web import getentry
+from web import showlibrary
 
 class rhandler(BaseHTTPRequestHandler):
 
@@ -23,6 +25,8 @@ class rhandler(BaseHTTPRequestHandler):
             "add": self._add,
             "remove": self._remove,
             "settings": self._settings,
+            "get": self._get,
+            "show": self._show,
         }
         func = command.get(self.path.split('/')[1], self._404)
         func(self.path.split('/')[2:])
@@ -89,8 +93,21 @@ class rhandler(BaseHTTPRequestHandler):
         newsetting.changesettings(text_string=settings)
         self.wfile.write(b"<h2>NOICE</h2>")
 
+    def _get(self, get):
+        self._set_headers(header={'keyword':'Content-type', 'value': 'application/json'})
+        gettheentry = getentry.GetEntry()
+        woah = json.dumps(gettheentry.getdbentry(text_string=get))
+        self.wfile.write(woah.encode())
+    
+    def _show(self, show):
+        self._set_headers(header={'keyword':'Content-type', 'value': 'application/json'})
+        showthelibrary = showlibrary.ShowLibrary()
+        showem = json.dumps(showthelibrary.showlib(text_string=show))
+        self.wfile.write(showem.encode())
+
 
 def run(server_class=HTTPServer, handler_class=rhandler, port=8080):
+    print("Starting webserver")
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()

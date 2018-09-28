@@ -4,8 +4,7 @@ function startLoad(){
     div.setAttribute('id', 'loaddiv');
     document.getElementById('loadbar').appendChild(div);
     var div = document.createElement('i');
-    div.textContent = "cached";
-    div.setAttribute('class', 'material-icons rotating');
+    div.setAttribute('class', 'fas fa-sync-alt rotating');
     div.setAttribute('id', 'loadingicon');
     document.getElementById('loaddiv').appendChild(div);
     $("#loaddiv").hide();

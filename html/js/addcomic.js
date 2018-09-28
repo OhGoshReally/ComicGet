@@ -88,34 +88,22 @@ function addcomic(q) {
 
 }
 
-function removecomic(a) {
-    var a
-    var s
-    var d
-    var f
+function removeComic(id) {
 
-    function switchremove(a, f){
-        $(a).hide(200, function(){
-            $.get(
-                "remove/" + f,
-                function() {
-                    $.getJSON("/static/settings.json", function(settings){
-                        showLibrary(settings);
-                    });
-                }
-            );
-        });
-    }
+    $('#deleteConfirm').modal('hide');
+    $('#exampleModal').modal('hide');
 
-    function findid(a) {
-        f = a.getElementsByClassName("comic-id")[0].innerText
-        switchremove(a, f)
-    }
+    bigPageOff()
 
-    function findtitle(a) {
-        s = a.getElementsByClassName("title")[0].innerText
-        findid(a)
-    }
-
-    findtitle(a)
+    $( "#library-entries" ).find(".comic-id:contains(" + id + ")").parents("li").hide(250, function(){
+        $( "#library-entries" ).find(".comic-id:contains(" + id + ")").parents("li").remove();
+        $.get(
+            "remove/" + id,
+            function() {
+                $.getJSON("/static/settings.json", function(settings){
+                    showLibrary(settings);
+                });
+            }
+        );
+    })  
 }
