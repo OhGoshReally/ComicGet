@@ -7,12 +7,6 @@ from datetime import date
 class DatabaseHandler:
     #db = SqliteDatabase(':memory:')
 
-    #dbname = 'newlibrarytest'
-
-    #fileDir = os.path.dirname(os.path.realpath('__file__'))
-    #filename = os.path.join(fileDir, './db/', dbname)
-    #filename = os.path.abspath(os.path.realpath(filename))
-
     db = SqliteDatabase('./db/library.db')
 
 
@@ -29,12 +23,8 @@ class Comic(BaseModel):
     titleslug = CharField(null=True)
     activestatus = BooleanField(null=True)
     synopsis = CharField(null=True)
-    #metadata = CharField(null=True)
     publisher = CharField(null=True)
-    #chapters = CharField(null=True)
-    #tags = CharField(null=True)
     startdate = DateField(null=True)
-    #startyear = CharField(null=True)
     filepath = CharField(null=True)
     fileprofile = CharField(null=True)
     rating = CharField(null=True)
@@ -48,13 +38,10 @@ class Comic(BaseModel):
 class Chapter(BaseModel):
     comic = ForeignKeyField(Comic, backref='chapters')
     name = CharField(null=True)
-    #downloaded = BooleanField(null=True)
     monitored = BooleanField(null=True)
     exists_on_disk = BooleanField(null=True)
     pages = IntegerField(null=True)
     number = IntegerField(null=True)
-    #release_date = TimestampField()
-    #watched = BooleanField()
 
 
 class Alternative_Names(BaseModel):
@@ -70,6 +57,11 @@ class Metadata_Items(BaseModel):
     posterpath = CharField(null=True)
     bannerpath = CharField(null=True)
 
+class Config(BaseModel):
+    key = CharField(null=True)
+    value = CharField(null=True)
+    type = CharField(null=True)
+
 class Create():
     def createTables(self):
         print("Checking database")
@@ -79,8 +71,23 @@ class Create():
             Chapter, 
             Alternative_Names,
             Tag,
-            Metadata_Items
+            Metadata_Items,
+            Config
         ])
+
+        check = Config.get_or_create(
+            key='default_view',
+            defaults={
+                'value': 'card', 
+                'type': 'ui'
+        })
+
+        check = Config.get_or_create(
+            key='default_view_override',
+            defaults={
+                'value': 'false', 
+                'type': 'ui'
+        })
 
         print("Done checking database")
 

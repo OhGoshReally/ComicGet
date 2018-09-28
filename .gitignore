@@ -1,6 +1,7 @@
 __pycache__*
 cache/*
 *.db
+*.pyc
 **/include/*
 pytest.py
 socclient.py

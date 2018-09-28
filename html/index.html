@@ -50,9 +50,9 @@
             var scrolled = 0
             var scrollTimer
             let animationcount = 0
-            $.getJSON("/static/settings.json", function(settings){
+            $.getJSON( "/fetchsettings", function(settings){
                 showLibrary(settings);
-            });
+            })
         </script>
     </head>
     <body onscroll="isScroll()">

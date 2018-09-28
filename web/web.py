@@ -5,6 +5,7 @@ import json
 from indexers import kitsu
 from web import postadd
 from web import postremove
+from web import getsettings
 from web import postsettings
 from web import getentry
 from web import showlibrary
@@ -24,6 +25,7 @@ class rhandler(BaseHTTPRequestHandler):
             "search": self._search,
             "add": self._add,
             "remove": self._remove,
+            "fetchsettings": self._fetchsettings,
             "settings": self._settings,
             "get": self._get,
             "show": self._show,
@@ -86,6 +88,12 @@ class rhandler(BaseHTTPRequestHandler):
         removeone = postremove.Remove()
         removeone.removecomic(text_string=remove)
         self.wfile.write(b"<h2>NOICE</h2>")
+    
+    def _fetchsettings(self, fetchsettings):
+        self._set_headers(header={'keyword':'Content-type', 'value': 'application/json'})
+        thesettings = getsettings.Settings()
+        showit = json.dumps(thesettings.showsettings(text_string=fetchsettings))
+        self.wfile.write(showit.encode())
 
     def _settings(self, settings):
         self._set_headers(header={'keyword':'Content-type', 'value': 'text/html'})

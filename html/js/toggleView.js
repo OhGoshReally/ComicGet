@@ -1,7 +1,7 @@
 function toggleView(a) {
     if (!a.className.includes("active")) {
 
-        $.get("/settings/ui/default_view/" + a.id);
+        $.get("/settings/default_view/" + (a.id.slice(5,999)));
 
         $( a ).parent().parent().find(".contentdivs").removeClass("active");
         $( a ).addClass("active");

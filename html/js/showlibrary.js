@@ -2,7 +2,9 @@ function showLibrary(settings) {
     var listfile = "/static/library/list.json"
     var imgdir = "/static/library/img"
 
-    if (settings['ui']['default_view'] == "view-poster"){
+    var settings = settings['settings']
+
+    if (settings['default_view']['value'] == "poster"){
         $('#view-poster').addClass("active");
         $('#view-card').removeClass("active")
     }
@@ -138,7 +140,7 @@ function showLibrary(settings) {
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'container imgdiv lilcontainer');
-                if (settings['ui']['default_view'] == "view-card"){
+                if (settings['default_view']['value'] == "card"){
                     div.setAttribute('style', 'display: none;');
                 }
                 $(div2).parents(".library-card")[0].appendChild(div);
@@ -149,7 +151,7 @@ function showLibrary(settings) {
                 div.appendChild(div2);
 
                 var div = document.createElement('div');
-                if (settings['ui']['default_view'] == "view-poster"){
+                if (settings['default_view']['value'] == "poster"){
                     div.setAttribute('style', 'display: none;');
                 }
                 div.setAttribute('class', 'container bigcontainer');
